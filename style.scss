@@ -112,3 +112,68 @@ button {
         transform: translateX(-100%);
     }
 }
+.about-game {
+    position: relative;    
+    background: rgb(32, 32, 39);
+
+    &__text{
+        font-size: 64px;
+        font-weight: 700;
+        padding-top: 94px;
+        color: #FFFFFF;
+        
+    }
+    &__text2{
+        max-width: 788px;
+        font-size: 24px;
+        font-weight: 400;
+        padding-top: 24px;
+        color: #FFFFFF;
+       
+    }
+    &__img{
+        position: absolute;       
+        right: 0px;
+        top: 100px;
+        z-index: 0;
+        
+        
+    }
+}
+.about-content{  
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 32px;
+    z-index: 1;
+    padding-top: 72px;
+    
+    
+    
+
+    &__box{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 32px;
+        
+        
+    }
+        
+        
+    &__box1{
+        width: 378px;
+        height: 473px;
+        background: rgb(252, 252, 252);
+        border-radius: 30px;
+        text-decoration: none;
+        color: #070707;
+        &_big{
+          height: 512px;   
+        }
+    }
+}
