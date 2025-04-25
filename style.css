@@ -27,14 +27,44 @@ button {
   height: 800px;
   background: rgb(225, 255, 143);
 }
+.header__star-1 {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 0;
+}
+.header__star-2 {
+  position: absolute;
+  left: 1013px;
+  top: 568px;
+  z-index: 1;
+}
+.header__star-3 {
+  position: absolute;
+  left: 948px;
+  top: 538px;
+  z-index: 2;
+}
+.header__star-4 {
+  position: absolute;
+  left: 156px;
+  top: 69px;
+}
+.header__star-5 {
+  position: absolute;
+  left: 63px;
+  top: 94px;
+}
 
 .heading {
+  position: relative;
   max-width: 768px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   padding-top: 196px;
+  z-index: 3;
 }
 .heading__name {
   font-size: 64px;
