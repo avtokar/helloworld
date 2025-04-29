@@ -24,7 +24,7 @@ button {
 }
 
 .header {
-  height: 800px;
+  height: 710px;
   background: rgb(225, 255, 143);
 }
 .header__star-1 {
@@ -214,4 +214,60 @@ button {
 }
 .about-content__box1_big2 {
   height: 512px;
+}
+
+@media (max-width: 767px) {
+  .center {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .header {
+    height: 650px;
+  }
+  .header__star-1 {
+    content: url(image/star_1m.svg);
+  }
+  .header__star-2 {
+    width: 39px;
+    height: 41px;
+    left: 304px;
+    top: 580px;
+  }
+  .header__star-3 {
+    width: 18px;
+    height: 18px;
+    left: 273px;
+    top: 557px;
+  }
+  .header__star-4 {
+    width: 21px;
+    height: 21px;
+    left: 92px;
+    top: 64px;
+  }
+  .header__star-5 {
+    width: 35px;
+    height: 35px;
+    left: 38px;
+    top: 97px;
+  }
+  .heading {
+    padding-top: 147px;
+  }
+  .heading__name {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 49px;
+    text-align: center;
+  }
+  .heading__about {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+  }
+  .heading__buttom {
+    margin-left: 29px;
+    margin-top: 36px;
+  }
 }/*# sourceMappingURL=style.css.map */

@@ -25,7 +25,7 @@ button {
 
 .header {
 
-    height: 800px;
+    height: 710px;
     background: rgb(225, 255, 143);
     &__star-1{
         position: absolute;       
@@ -242,3 +242,4 @@ button {
     }
     
 }
+@import 'mobile';

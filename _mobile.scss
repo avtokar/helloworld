@@ -1,0 +1,59 @@
+@media (max-width: 767px) {
+    .center {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+.header{
+    height: 650px;
+    &__star-1 {
+        content: url(image/star_1m.svg)
+    }
+    &__star-2{
+        width: 39px;
+        height: 41px;
+        left: 304px;
+        top: 580px;
+    }
+    &__star-3{
+        width: 18px;
+        height: 18px;
+        left: 273px;
+        top: 557px;
+    }
+    &__star-4{
+        width: 21px;
+        height: 21px;
+        left: 92px;
+        top: 64px;
+    }
+    &__star-5{
+        width: 35px;
+        height: 35px;
+        left: 38px;
+        top: 97px; 
+    }
+}
+.heading{
+    padding-top: 147px;
+    &__name{
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 49px;
+        text-align: center;
+       
+    }
+    &__about{
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: center;
+    }
+    &__buttom{
+       margin-left: 29px;
+       margin-top: 36px;
+    }
+}
+
+
+    
+}
