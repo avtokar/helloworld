@@ -121,6 +121,7 @@ button {
   gap: 51px;
   align-items: center;
   animation: scrollLeft 20s linear infinite;
+  padding-top: 27px;
 }
 .menu__contener-choice {
   font-size: 30px;
@@ -269,5 +270,18 @@ button {
   .heading__buttom {
     margin-left: 29px;
     margin-top: 36px;
+  }
+  .menu {
+    height: 50px;
+  }
+  .menu__contener {
+    gap: 27px;
+    padding-top: 16px;
+  }
+  .menu__contener-choice {
+    font-size: 16px;
+  }
+  .menu-star {
+    content: url(image/Star_m.svg);
   }
 }/*# sourceMappingURL=style.css.map */

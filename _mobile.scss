@@ -53,7 +53,21 @@
        margin-top: 36px;
     }
 }
+.menu{
+    height: 50px;
+    &__contener{
+        gap: 27px;
+        padding-top: 16px;
 
+        &-choice{
+            font-size: 16px;
+            
+        }
+    }
+    &-star{
+        content: url(image/Star_m.svg);
+    }
+}
 
     
 }
