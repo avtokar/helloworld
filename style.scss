@@ -88,7 +88,7 @@ button {
 
     }
 
-    &__buttom {
+    &__button {
         width: 247px;
         height: 66px;
         background: #0a0a0a;
@@ -99,18 +99,18 @@ button {
         margin-top: 64px;
     }
 
-    &__buttom:hover {
+    &__button:hover {
         background: #fbfbfc;
         color: black; 
     }
-    &__buttom &__scroll {
+    &__button &__scroll {
         text-decoration: none;
         color: inherit;
         display: inline-block;
         font-size: 24px;
         font-weight: 600;
     }
-    &__buttom:hover &__scroll {
+    &__button:hover &__scroll {
         color: rgb(3, 3, 3); 
     }
     

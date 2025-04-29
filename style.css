@@ -81,7 +81,7 @@ button {
 .heading__about-text {
   font-weight: 600;
 }
-.heading__buttom {
+.heading__button {
   width: 247px;
   height: 66px;
   background: #0a0a0a;
@@ -91,18 +91,18 @@ button {
   color: #FFFFFF;
   margin-top: 64px;
 }
-.heading__buttom:hover {
+.heading__button:hover {
   background: #fbfbfc;
   color: black;
 }
-.heading__buttom .heading__scroll {
+.heading__button .heading__scroll {
   text-decoration: none;
   color: inherit;
   display: inline-block;
   font-size: 24px;
   font-weight: 600;
 }
-.heading__buttom:hover .heading__scroll {
+.heading__button:hover .heading__scroll {
   color: rgb(3, 3, 3);
 }
 
@@ -267,9 +267,16 @@ button {
     line-height: 20px;
     text-align: center;
   }
-  .heading__buttom {
+  .heading__button {
     margin-left: 29px;
     margin-top: 36px;
+  }
+  .heading__button:hover {
+    background-color: black;
+    color: white;
+  }
+  .heading__button:hover .heading__scroll {
+    color: inherit;
   }
   .menu {
     height: 50px;
@@ -283,5 +290,8 @@ button {
   }
   .menu-star {
     content: url(image/Star_m.svg);
+  }
+  .about-game__img {
+    display: none;
   }
 }/*# sourceMappingURL=style.css.map */
