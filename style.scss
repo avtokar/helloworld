@@ -91,21 +91,30 @@ button {
     &__buttom {
         width: 247px;
         height: 66px;
-        font-size: 24px;
-        font-weight: 600;
-        text-align: center;
-        background: #202027;
+        background: #0a0a0a;
         border: 1px solid #202027;
         box-sizing: border-box;
         border-radius: 60px;
-        color: white;
+        color: #FFFFFF;
         margin-top: 64px;
     }
 
     &__buttom:hover {
         background: #fbfbfc;
-        color: black;
+        color: black; 
     }
+    &__buttom &__scroll {
+        text-decoration: none;
+        color: inherit;
+        display: inline-block;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    &__buttom:hover &__scroll {
+        color: rgb(3, 3, 3); 
+    }
+    
+    
 }
 
 .menu {
