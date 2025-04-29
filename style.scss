@@ -192,6 +192,21 @@ button {
         justify-content: flex-start;
         align-items: flex-start;
         gap: 32px;
+        &-text{
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 32px;
+            margin-left: 32px;
+            text-align: left;
+        }
+        &-text2{
+            width: 300px;
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 16px;
+            margin-left: 32px;
+            text-align: left;
+        }
         
         
     }
@@ -204,8 +219,17 @@ button {
         border-radius: 30px;
         text-decoration: none;
         color: #070707;
+        transition: transform 0.3s;
+        &:hover{
+          transform: scale(1.1);  
+        }
         &_big{
-          height: 512px;   
+          height: 551px;   
+        }
+        &_big2{
+            height: 512px; 
+
         }
     }
+    
 }
