@@ -7,9 +7,8 @@
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -25,7 +24,7 @@
             <span class="heading__about-text">«Поехали!»</span> и <span
                     class="heading__about-text">приступай.</span>
             </p>
-            <button class="heading__button"  type="button"><a class="heading__scroll" href="#scroll">Поехали!</a></button>
+            <a class="heading__button" href="#scroll">Поехали!</a>
         </div>
 
     </div>
@@ -45,19 +44,19 @@
             <img src="image/Star.svg" alt="Звезда" class="menu-star">
         </div>       
     </div>
-    <div  class="about-game center" id="scroll">
-        <h1  class="about-game__text">Об играх</h1>
+    <section class="about-game center" id="scroll" >
+        <h2  class="about-game__text">Об играх</h2>
         <p class="about-game__text2">В моей коллекции представлено 6 игр на разные темы. Игры несложные — в них может поиграть каждый. Все игры доступны для пользования.</p>
         <img class="about-game__img" src="image/Star_1.svg" alt="Звезда">
         <div class="about-content">            
             <div class="about-content__box">
                 <a href="#" class="about-content__box1">
-                    <img src="image/game_4.svg" alt="Игра">
+                    <img src="image/game_1.svg" alt="Игра">
                     <p class="about-content__box-text">Игра №1</p>
                     <p class="about-content__box-text2">Угадай число</p>                    
                 </a>
                 <a href="#" class="about-content__box1 about-content__box1_big">
-                    <img src="image/game_4.svg" alt="Игра">
+                    <img class="about-content__box-img" src="image/game_4.jpg" alt="Игра">
                     <p class="about-content__box-text">Игра №4</p>
                     <p class="about-content__box-text2">Камень, ножницы, бумага</p>
                 </a> 
@@ -78,7 +77,7 @@
                 <a href="#" class="about-content__box1">
                     <img src="image/game_3.svg" alt="Игра">
                     <p class="about-content__box-text">Игра №3</p>
-                    <p class="about-content__box-text2">Переверни текс</p>
+                    <p class="about-content__box-text2">Переверни текст</p>
                 </a>
                 <a href="#" class="about-content__box1 about-content__box1_big">
                     <img src="image/game_6.svg" alt="Игра">
@@ -87,19 +86,20 @@
                 </a>
             </div>
         </div>
-    </div>
-    <div class="mini-game center">
-        <h1 class="mini-game__text">Мини-игры</h1>
+    </section>
+
+    <section class="mini-game center">
+        <h2 class="mini-game__text">Мини-игры</h2>
         <div class="game-contener">
             <div class="game-box">
-                <img src="image/game_11.svg" alt="">
-                <div>
-                    <p>Угадай число</p>
-                    <p>Попробуй угадать случайное число от 1 до 100</p>
-                    <button class="game-box__button"></button>
+                <img class="game-box__img" src="image/game_11.svg" alt="">
+                <div class="game-box-content">
+                    <p class="game-box-content__text">Угадай число</p>
+                    <p class="game-box-content__text2">Попробуй угадать случайное число от 1 до 100</p>
+                    <button class="game-box__button">Играть</button>
                 </div>            
             </div>
-            <div class="game-box__back">
+            <div class="game-box-back">
                 <img src="image/game_11.svg" alt="">
                 <div>
                     <p>Угадай число</p>
@@ -130,15 +130,11 @@
                 <p>Угадай число</p>
                 <p>Попробуй угадать случайное число от 1 до 100</p>
                 <button class="game-box__button"></button>
-            </div>
-    
-
+            </div>  
         </div>
-        
-
-
-
-    </div>
+    </section>
+   
+  
 <script src="script.js"></script>
 </body>
 

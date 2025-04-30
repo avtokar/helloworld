@@ -84,26 +84,22 @@ button {
 .heading__button {
   width: 247px;
   height: 66px;
-  background: #0a0a0a;
-  border: 1px solid #202027;
-  box-sizing: border-box;
+  background-color: #070707;
+  color: white;
+  text-decoration: none;
+  border: 1px solid rgb(32, 32, 39);
   border-radius: 60px;
-  color: #FFFFFF;
-  margin-top: 64px;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .heading__button:hover {
   background: #fbfbfc;
   color: black;
-}
-.heading__button .heading__scroll {
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
-  font-size: 24px;
-  font-weight: 600;
-}
-.heading__button:hover .heading__scroll {
-  color: rgb(3, 3, 3);
 }
 
 .menu {
@@ -184,11 +180,18 @@ button {
   gap: 32px;
 }
 .about-content__box-text {
+  width: 108px;
+  height: 36px;
   font-size: 16px;
   font-weight: 500;
   margin-top: 32px;
   margin-left: 32px;
   text-align: left;
+  border-radius: 52.58px;
+  background: #F7F7F7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .about-content__box-text2 {
   width: 300px;
@@ -197,6 +200,9 @@ button {
   margin-top: 16px;
   margin-left: 32px;
   text-align: left;
+}
+.about-content__box-img {
+  border-radius: 30px;
 }
 .about-content__box1 {
   width: 378px;
@@ -239,18 +245,41 @@ button {
   flex-direction: row-reverse;
   justify-content: space-between;
   background-color: #FFFFFF;
+  border-radius: 30px;
 }
-.game-box__back {
+.game-box-back {
   background-color: #FFFFFF;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  border-radius: 30px;
+}
+.game-box-content {
+  max-width: 504px;
+  padding: 48px;
+}
+.game-box-content__text {
+  font-size: 48px;
+  font-weight: 700;
+}
+.game-box-content__text2 {
+  font-size: 24px;
+  font-weight: 400;
+  margin-top: 24px;
 }
 .game-box__button {
   width: 247px;
   height: 66px;
+  font-size: 24px;
+  font-weight: 600;
   border-radius: 60px;
   background: rgb(32, 32, 39);
+  color: #FFFFFF;
+  margin-top: 36px;
+}
+.game-box__button:hover {
+  background: rgb(254, 254, 255);
+  color: #0a0a0a;
 }
 
 @media (max-width: 767px) {
