@@ -251,6 +251,7 @@ button {
 }
 .mini-game{
     background-color: rgb(32, 32, 39);
+    
     &__text{
         font-size: 64px;
         font-weight: 700;
@@ -258,16 +259,31 @@ button {
         color: #FFFFFF
 
     }
+    &__star-6{
+        position: absolute;
+        left: 1326.54px;
+        top: 2396px;
+        
+
+    }
+    &__star-7{
+        position: absolute;
+        left: 1281.33px;
+        top: 2363px;
+         
+    }
     &__star-8{
        position: absolute;
        left: 1319px;
        top: 5636px;
+       
 
     }
     &__star-10{
         position: absolute;
         left: 1249px;
         top: 5684px;
+       
     }
 }
 .game-contener{
