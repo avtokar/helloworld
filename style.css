@@ -289,7 +289,7 @@ button {
   font-weight: 400;
   margin-top: 24px;
 }
-.game-box__button {
+.game-box-button {
   width: 247px;
   height: 66px;
   font-size: 24px;
@@ -299,7 +299,7 @@ button {
   color: #FFFFFF;
   margin-top: 36px;
 }
-.game-box__button:hover {
+.game-box-button:hover {
   background: rgb(254, 254, 255);
   color: #0a0a0a;
 }
@@ -405,7 +405,7 @@ button {
     flex-direction: column;
     align-items: center;
   }
-  .game-box__img {
+  .game-box-img {
     width: 343px;
     height: 285px;
   }
@@ -421,13 +421,13 @@ button {
     font-size: 16px;
     margin-top: 16px;
   }
-  .game-box__button {
+  .game-box-button {
     width: 285px;
     height: 55px;
     font-size: 16px;
     margin-top: 32px;
   }
-  .game-box__button:hover {
+  .game-box-button:hover {
     background: rgb(8, 8, 8);
     color: #fafafa;
   }
