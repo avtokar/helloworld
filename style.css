@@ -229,7 +229,7 @@ button {
 .mini-game__text {
   font-size: 64px;
   font-weight: 700;
-  padding-top: 64px;
+  font-size: 40px;
   color: #FFFFFF;
 }
 .mini-game__star-6 {
@@ -375,9 +375,6 @@ button {
     background-color: black;
     color: white;
   }
-  .heading__button:hover .heading__scroll {
-    color: inherit;
-  }
   .menu {
     height: 50px;
   }
@@ -391,7 +388,50 @@ button {
   .menu-star {
     content: url(image/Star_m.svg);
   }
-  .about-game__img {
+  .about-game {
     display: none;
+  }
+  .mini-game__text {
+    font-size: 40px;
+    padding-top: 48px;
+  }
+  .game-contener {
+    gap: 24px;
+    padding-top: 48px;
+    padding-bottom: 9.88px;
+  }
+  .game-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .game-box__img {
+    width: 343px;
+    height: 285px;
+  }
+  .game-box-back {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .game-box-content__text {
+    font-size: 32px;
+  }
+  .game-box-content__text2 {
+    font-size: 16px;
+    margin-top: 16px;
+  }
+  .game-box__button {
+    width: 285px;
+    height: 55px;
+    font-size: 16px;
+    margin-top: 32px;
+  }
+  .game-box__button:hover {
+    background: rgb(8, 8, 8);
+    color: #fafafa;
+  }
+  .footer__text {
+    font-size: 16px;
   }
 }/*# sourceMappingURL=style.css.map */
