@@ -225,6 +225,7 @@ button {
 
 .mini-game {
   background-color: rgb(32, 32, 39);
+  padding-top: 46px;
 }
 .mini-game__text {
   font-size: 64px;
@@ -281,6 +282,7 @@ button {
   padding: 48px;
 }
 .game-box-content__text {
+  width: 450px;
   font-size: 48px;
   font-weight: 700;
 }
@@ -391,9 +393,11 @@ button {
   .about-game {
     display: none;
   }
+  .mini-game {
+    padding-top: 48px;
+  }
   .mini-game__text {
     font-size: 40px;
-    padding-top: 48px;
   }
   .game-contener {
     gap: 24px;

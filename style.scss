@@ -27,31 +27,36 @@ button {
 
     height: 710px;
     background: rgb(225, 255, 143);
-    &__star-1{
-        position: absolute;       
+
+    &__star-1 {
+        position: absolute;
         right: 0px;
         top: 0px;
         z-index: 0;
     }
-    &__star-2{
+
+    &__star-2 {
         position: absolute;
         left: 1013px;
         top: 568px;
         z-index: 1;
     }
-    &__star-3{
+
+    &__star-3 {
         position: absolute;
         left: 948px;
-        top: 538px;       
+        top: 538px;
         z-index: 2;
     }
-    &__star-4{
+
+    &__star-4 {
         position: absolute;
         left: 156px;
         top: 69px;
 
     }
-    &__star-5{
+
+    &__star-5 {
         position: absolute;
         left: 63px;
         top: 94px;
@@ -67,7 +72,7 @@ button {
     align-items: flex-start;
     padding-top: 196px;
     z-index: 3;
-    
+
 
     &__name {
         font-size: 64px;
@@ -107,10 +112,10 @@ button {
 
     &__button:hover {
         background: #fbfbfc;
-        color: black; 
+        color: black;
     }
-    
-    
+
+
 }
 
 .menu {
@@ -150,35 +155,39 @@ button {
         transform: translateX(-100%);
     }
 }
+
 .about-game {
-    position: relative;    
+    position: relative;
     background: rgb(32, 32, 39);
 
-    &__text{
+    &__text {
         font-size: 64px;
         font-weight: 700;
         padding-top: 94px;
         color: #FFFFFF;
-        
+
     }
-    &__text2{
+
+    &__text2 {
         max-width: 788px;
         font-size: 24px;
         font-weight: 400;
         padding-top: 24px;
         color: #FFFFFF;
-       
+
     }
-    &__img{
-        position: absolute;       
+
+    &__img {
+        position: absolute;
         right: 0px;
         top: 100px;
         z-index: 0;
-        
-        
+
+
     }
 }
-.about-content{  
+
+.about-content {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -188,17 +197,18 @@ button {
     gap: 32px;
     z-index: 1;
     padding-top: 72px;
-    
-    
-    
 
-    &__box{
+
+
+
+    &__box {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         gap: 32px;
-        &-text{
+
+        &-text {
             width: 108px;
             height: 36px;
             font-size: 16px;
@@ -212,7 +222,8 @@ button {
             align-items: center;
             justify-content: center;
         }
-        &-text2{
+
+        &-text2 {
             width: 300px;
             font-size: 32px;
             font-weight: 700;
@@ -220,15 +231,16 @@ button {
             margin-left: 32px;
             text-align: left;
         }
-        &-img{
+
+        &-img {
             border-radius: 30px;
         }
-        
-        
+
+
     }
-        
-        
-    &__box1{
+
+
+    &__box1 {
         width: 378px;
         height: 473px;
         background: rgb(252, 252, 252);
@@ -236,57 +248,66 @@ button {
         text-decoration: none;
         color: #070707;
         transition: transform 0.3s;
-        &:hover{
-          transform: scale(1.1);  
+
+        &:hover {
+            transform: scale(1.1);
         }
-        &_big{
-          height: 551px;   
+
+        &_big {
+            height: 551px;
         }
-        &_big2{
-            height: 512px; 
+
+        &_big2 {
+            height: 512px;
 
         }
     }
-    
+
 }
-.mini-game{
+
+.mini-game {
     background-color: rgb(32, 32, 39);
-    
-    &__text{
+    padding-top: 46px;
+
+    &__text {
         font-size: 64px;
         font-weight: 700;
         font-size: 40px;
         color: #FFFFFF
-
     }
-    &__star-6{
+
+    &__star-6 {
         position: absolute;
         left: 1326.54px;
         top: 2396px;
-        
+
 
     }
-    &__star-7{
+
+    &__star-7 {
         position: absolute;
         left: 1281.33px;
         top: 2363px;
-         
-    }
-    &__star-8{
-       position: absolute;
-       left: 1319px;
-       top: 5636px;
-       
 
     }
-    &__star-10{
+
+    &__star-8 {
+        position: absolute;
+        left: 1319px;
+        top: 5636px;
+
+
+    }
+
+    &__star-10 {
         position: absolute;
         left: 1249px;
         top: 5684px;
-       
+
     }
 }
-.game-contener{
+
+.game-contener {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -294,36 +315,41 @@ button {
     padding-top: 72px;
     padding-bottom: 144px;
 }
-.game-box{
+
+.game-box {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
     background-color: #FFFFFF;
     border-radius: 30px;
-    &-back{
+
+    &-back {
         background-color: #FFFFFF;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         border-radius: 30px;
     }
-    &-content{
+
+    &-content {
         max-width: 504px;
         padding: 48px;
 
-        &__text{
+        &__text {
+            width: 450px;
             font-size: 48px;
             font-weight: 700;
         }
-        &__text2{
+
+        &__text2 {
             font-size: 24px;
             font-weight: 400;
             margin-top: 24px;
         }
     }
-    
-        
-    &-button{
+
+
+    &-button {
         width: 247px;
         height: 66px;
         font-size: 24px;
@@ -332,24 +358,28 @@ button {
         background: rgb(32, 32, 39);
         color: #FFFFFF;
         margin-top: 36px;
-        &:hover{
+
+        &:hover {
             background: rgb(254, 254, 255);
             color: #0a0a0a;
         }
-        
+
     }
 
 }
-.footer{
+
+.footer {
     height: 150px;
     background-color: #BDED35;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    &__text{
-      font-size: 24px;
-    font-weight: 600;
+
+    &__text {
+        font-size: 24px;
+        font-weight: 600;
     }
 }
+
 @import 'mobile';
