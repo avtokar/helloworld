@@ -23,5 +23,3 @@ function startGame() {
 
     guessNumberGame();
 }
-
-document.getElementById('PlayGuessNumber').addEventListener('click', startGame);
