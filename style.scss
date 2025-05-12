@@ -272,7 +272,6 @@ button {
     &__text {
         font-size: 64px;
         font-weight: 700;
-        font-size: 40px;
         color: #FFFFFF
     }
 
@@ -328,6 +327,10 @@ button {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        border-radius: 30px;
+    }
+
+    &-img {
         border-radius: 30px;
     }
 

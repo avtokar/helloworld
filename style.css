@@ -230,7 +230,6 @@ button {
 .mini-game__text {
   font-size: 64px;
   font-weight: 700;
-  font-size: 40px;
   color: #FFFFFF;
 }
 .mini-game__star-6 {
@@ -275,6 +274,9 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  border-radius: 30px;
+}
+.game-box-img {
   border-radius: 30px;
 }
 .game-box-content {
