@@ -8,3 +8,13 @@ function min(a, b) {
         return b;
     }
 }
+
+//задание 2
+function checkParity(number) {
+    if (number % 2 === 0) {
+        return 'Число четное';
+    }
+    else {
+        return 'Число нечетное';
+    }
+}
