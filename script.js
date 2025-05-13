@@ -38,3 +38,14 @@ while (n >= 50) {
 
 console.log('Результат:', n);
 console.log('Количество итераций:', num);
+
+// Задание № 6
+
+let firstFriday = 5;
+for (let day = 1; day <= 31; day++) {
+
+  if ((day - firstFriday) % 7 === 0) {
+
+    console.log(`Сегодня пятница, ${day}-е число. Необходимо подготовить отчет.`);
+  }
+}
