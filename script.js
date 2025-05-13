@@ -52,3 +52,17 @@ function multiplyNumbers(num1, num2) {
         return num1 * num2;
     }
 }
+
+//задание 6 
+function cubeNumber() {
+  const input = prompt('Введите число');
+  const number = parseFloat(input);
+
+  if (isNaN(number)) {
+    return 'Переданный параметр не является числом';
+  } 
+  else {
+    const cube = number ** 3;
+    return `Число ${number} в кубе равняется ${cube}`;
+  }
+}
