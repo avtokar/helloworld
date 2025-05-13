@@ -18,3 +18,12 @@ function checkParity(number) {
         return 'Число нечетное';
     }
 }
+
+//задание 3
+function printSquare(number) {
+    console.log(number ** 2);
+}
+
+function getSquare(number) {
+    return number ** 2;
+}
