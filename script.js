@@ -49,3 +49,15 @@ for (let day = 1; day <= 31; day++) {
     console.log(`Сегодня пятница, ${day}-е число. Необходимо подготовить отчет.`);
   }
 }
+
+// Доп. задание № 1
+let k = 100;
+let iterations = 0;
+
+while (k >= 0) {
+  k -= 7;
+  iterations++;
+}
+
+console.log('Количество итераций:', iterations);
+console.log('Результат:', k);
