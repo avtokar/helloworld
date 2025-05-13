@@ -27,3 +27,18 @@ function printSquare(number) {
 function getSquare(number) {
     return number ** 2;
 }
+
+//задание 4
+function greetByAge() {
+    const age = prompt('Сколько вам лет?');
+
+    if (isNaN(age) || age < 0) {
+        alert('Вы ввели неправильное значение');
+    }
+    else if (age >= 0 && age <= 12) {
+        alert('Привет, друг!');
+    }
+    else {
+        alert('Добро пожаловать!');
+    }
+}
