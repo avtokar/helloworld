@@ -77,3 +77,13 @@ const circle1 = {
     return 2 * Math.PI * this.radius;
   }
 };
+
+const circle2 = {
+  radius: 0,
+  getArea: function() {
+    return Math.PI * this.radius ** 2;
+  },
+  getPerimeter: function() {
+    return 2 * Math.PI * this.radius;
+  }
+};
