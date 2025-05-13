@@ -69,7 +69,7 @@ function cubeNumber() {
 
 //задание 7
 const circle1 = {
-  radius: 0,
+  radius: 5,
   getArea: function() {
     return Math.PI * this.radius ** 2;
   },
@@ -79,7 +79,7 @@ const circle1 = {
 };
 
 const circle2 = {
-  radius: 0,
+  radius: 3,
   getArea: function() {
     return Math.PI * this.radius ** 2;
   },
