@@ -42,3 +42,13 @@ function greetByAge() {
         alert('Добро пожаловать!');
     }
 }
+
+//задание 5 
+function multiplyNumbers(num1, num2) {
+    if (isNaN(parseFloat(num1)) || isNaN(parseFloat(num2))) {
+        return 'Одно или оба значения не являются числом';
+    }
+    else {
+        return num1 * num2;
+    }
+}
