@@ -1,89 +1,81 @@
-//задание 1
-function min(a, b) {
-
-    if (a < b) {
-        return a;
-    }
-    else {
-        return b;
-    }
+// Задание № 1
+let count = 0;
+while (count < 2) {
+  console.log("Привет");
+  count++;
 }
 
-//задание 2
-function checkParity(number) {
-    if (number % 2 === 0) {
-        return 'Число четное';
-    }
-    else {
-        return 'Число нечетное';
-    }
+// Задание № 2
+for (let i = 1; i <= 5; i++) {
+  console.log(i);
+}
+// Задание № 3
+for (let i = 7; i <= 22; i++) {
+  console.log(i);
 }
 
-//задание 3
-function printSquare(number) {
-    console.log(number ** 2);
-}
-
-function getSquare(number) {
-    return number ** 2;
-}
-
-//задание 4
-function greetByAge() {
-    const age = prompt('Сколько вам лет?');
-
-    if (isNaN(age) || age < 0) {
-        alert('Вы ввели неправильное значение');
-    }
-    else if (age >= 0 && age <= 12) {
-        alert('Привет, друг!');
-    }
-    else {
-        alert('Добро пожаловать!');
-    }
-}
-
-//задание 5 
-function multiplyNumbers(num1, num2) {
-    if (isNaN(parseFloat(num1)) || isNaN(parseFloat(num2))) {
-        return 'Одно или оба значения не являются числом';
-    }
-    else {
-        return num1 * num2;
-    }
-}
-
-//задание 6 
-function cubeNumber() {
-  const input = prompt('Введите число');
-  const number = parseFloat(input);
-
-  if (isNaN(number)) {
-    return 'Переданный параметр не является числом';
-  } 
-  else {
-    const cube = number ** 3;
-    return `Число ${number} в кубе равняется ${cube}`;
-  }
-}
-
-//задание 7
-const circle1 = {
-  radius: 0,
-  getArea: function() {
-    return Math.PI * this.radius ** 2;
-  },
-  getPerimeter: function() {
-    return 2 * Math.PI * this.radius;
-  }
+// Задание № 4
+const obj = {
+  "Коля": '200',
+  "Вася": '300',
+  "Петя": '400'
 };
 
-const circle2 = {
-  radius: 0,
-  getArea: function() {
-    return Math.PI * this.radius ** 2;
-  },
-  getPerimeter: function() {
-    return 2 * Math.PI * this.radius;
+for (let key in obj) {
+  console.log(`${key} — зарплата ${obj[key]} долларов`);
+}
+
+// Задание № 5
+
+let n = 1000;
+let num = 0;
+
+while (n >= 50) {
+  n /= 2;
+  num++;
+}
+
+console.log('Результат:', n);
+console.log('Количество итераций:', num);
+// Задание № 6
+
+let firstFriday = 5;
+for (let day = 1; day <= 31; day++) {
+
+  if ((day - firstFriday) % 7 === 0) {
+
+    console.log(`Сегодня пятница, ${day}-е число. Необходимо подготовить отчет.`);
   }
+}
+
+// Доп. задание № 1
+let k = 100;
+let iterations = 0;
+
+while (k >= 0) {
+  k -= 7;
+  iterations++;
+}
+
+console.log('Количество итераций:', iterations);
+console.log('Результат:', k);
+
+// Доп. задание № 2
+const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+for (let i = 0; i < months.length; i++) {
+  console.log(`Месяц: ${months[i]}, его порядковый номер: ${i + 1}`);
+}
+
+// Доп. задание № 3
+const book = {
+  название: "Война и мир",
+  автор: "Лев Толстой",
+  год_издания: 1869,
+  жанр: "Роман-эпопея"
 };
+
+console.log(book);
+
+// Доп. задание № 4
+ не понимаю как сделать
