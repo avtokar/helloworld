@@ -66,3 +66,14 @@ function cubeNumber() {
     return `Число ${number} в кубе равняется ${cube}`;
   }
 }
+
+//задание 7
+const circle1 = {
+  radius: 0,
+  getArea: function() {
+    return Math.PI * this.radius ** 2;
+  },
+  getPerimeter: function() {
+    return 2 * Math.PI * this.radius;
+  }
+};
