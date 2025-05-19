@@ -42,7 +42,7 @@ console.log('Количество итераций:', num);
 // Задание № 6
 
 let firstFriday = 5;
-for (let day = 1; day <= 31; day++) {
+for (let day = 1; day <= 31; day + 7) {
 
   if ((day - firstFriday) % 7 === 0) {
 
