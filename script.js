@@ -1,1 +1,9 @@
+//Задание № 1
+const arr = [1, 5, 4, 10, 0, 3];
 
+for (const element of arr) {
+  console.log(element);
+  if (element === 10) {
+    break;
+  }
+}
