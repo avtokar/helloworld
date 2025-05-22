@@ -35,3 +35,17 @@ console.log(array);
 const arr = [1, 1, 1];
 arr.push(2, 2, 2);
 console.log(arr); 
+
+//Задание № 6
+const arr = [9, 8, 7, 'a', 6, 5];
+const filteredArr = arr.filter(item => item !== 'a');
+console.log(filteredArr); 
+
+//Задание № 7
+const arr = [9, 8, 7, 6, 5];
+const userInput = prompt('Угадайте число из массива!');
+if (arr.includes(Number(userInput))) {
+  alert('Угадал');
+} else {
+  alert('Не угадал');
+}
