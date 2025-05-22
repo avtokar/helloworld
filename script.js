@@ -16,7 +16,7 @@ console.log(index);
 //Задание № 3
 const arr = [1, 3, 5, 10, 20];
 const result = arr.join(' ');
-console.log(result); // Вывод: 1 3 5 10 20
+console.log(result); 
 
 //Задание № 4
 const array = [];
@@ -29,4 +29,9 @@ for (let i = 0; i < 3; i++) {
   array.push(row);
 }
 
-console.log(array); // Вывод: [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+console.log(array); 
+
+//Задание № 5
+const arr = [1, 1, 1];
+arr.push(2, 2, 2);
+console.log(arr); 
