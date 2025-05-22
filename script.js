@@ -17,3 +17,16 @@ console.log(index);
 const arr = [1, 3, 5, 10, 20];
 const result = arr.join(' ');
 console.log(result); // Вывод: 1 3 5 10 20
+
+//Задание № 4
+const array = [];
+
+for (let i = 0; i < 3; i++) {
+  const row = [];
+  for (let j = 0; j < 3; j++) {
+    row.push(1);
+  }
+  array.push(row);
+}
+
+console.log(array); // Вывод: [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
