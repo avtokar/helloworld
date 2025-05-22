@@ -13,3 +13,7 @@ const arr = [1, 5, 4, 10, 0, 3];
 const index = arr.indexOf(4);
 console.log(index);
 
+//Задание № 3
+const arr = [1, 3, 5, 10, 20];
+const result = arr.join(' ');
+console.log(result); // Вывод: 1 3 5 10 20
