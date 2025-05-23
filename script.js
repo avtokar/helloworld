@@ -66,3 +66,13 @@ for (let i = 0; i < arr.length - 1; i++) {
   const sum = arr[i] + arr[i + 1];
   console.log(`Сумма элементов ${arr[i]} и ${arr[i + 1]} равна ${sum}`);
 }
+
+//Задание № 11
+function squareArrayElements(numbers) {
+  const squaredNumbers = [];
+  for (let i = 0; i < numbers.length; i++) {
+    squaredNumbers.push(numbers[i] ** 2);
+  }
+  return squaredNumbers;
+}
+
