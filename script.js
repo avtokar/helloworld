@@ -59,3 +59,10 @@ console.log(reversedStr); // выводит 'fedcba'
 const arr = [[1, 2, 3], [4, 5, 6]];
 const flattenedArr = arr.flat();
 console.log(flattenedArr); // выводит [1, 2, 3, 4, 5, 6]
+
+//Задание № 10
+const arr = [2, 5, 8, 3, 1, 7, 4, 9, 6, 10];
+for (let i = 0; i < arr.length - 1; i++) {
+  const sum = arr[i] + arr[i + 1];
+  console.log(`Сумма элементов ${arr[i]} и ${arr[i + 1]} равна ${sum}`);
+}
