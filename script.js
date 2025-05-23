@@ -84,3 +84,14 @@ function getWordLengths(words) {
   }
   return lengths;
 }
+
+//Задание № 13
+function getNegativeNumbers(numbers) {
+  const negativeNumbers = [];
+  for (let i = 0; i < numbers.length; i++) {
+    if (numbers[i] < 0) {
+      negativeNumbers.push(numbers[i]);
+    }
+  }
+  return negativeNumbers;
+}
