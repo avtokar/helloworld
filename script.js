@@ -109,3 +109,16 @@ for (let i = 0; i < array.length; i++) {
 }
 console.log('Исходный массив:', array);
 console.log('Массив с четными значениями:', evenNumbers);
+
+//Задание № 15
+const array = [];
+for (let i = 0; i < 6; i++) {
+  array.push(Math.floor(Math.random() * 10) + 1);
+}
+let sum = 0;
+for (let i = 0; i < array.length; i++) {
+  sum += array[i];
+}
+const average = sum / array.length;
+console.log('Массив:', array);
+console.log('Среднее арифметическое:', average);
