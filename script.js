@@ -54,3 +54,8 @@ if (arr.includes(Number(userInput))) {
 const str = 'abcdef';
 const reversedStr = str.split('').reverse().join('');
 console.log(reversedStr); // выводит 'fedcba'
+
+//Задание № 9
+const arr = [[1, 2, 3], [4, 5, 6]];
+const flattenedArr = arr.flat();
+console.log(flattenedArr); // выводит [1, 2, 3, 4, 5, 6]
