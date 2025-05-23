@@ -95,3 +95,17 @@ function getNegativeNumbers(numbers) {
   }
   return negativeNumbers;
 }
+
+//Задание № 14
+const array = [];
+for (let i = 0; i < 10; i++) {
+  array.push(Math.floor(Math.random() * 11));
+}
+const evenNumbers = [];
+for (let i = 0; i < array.length; i++) {
+  if (array[i] % 2 === 0) {
+    evenNumbers.push(array[i]);
+  }
+}
+console.log('Исходный массив:', array);
+console.log('Массив с четными значениями:', evenNumbers);
