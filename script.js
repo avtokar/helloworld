@@ -49,3 +49,8 @@ if (arr.includes(Number(userInput))) {
 } else {
   alert('Не угадал');
 }
+
+//Задание № 8
+const str = 'abcdef';
+const reversedStr = str.split('').reverse().join('');
+console.log(reversedStr); // выводит 'fedcba'
