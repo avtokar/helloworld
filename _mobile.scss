@@ -100,6 +100,23 @@
             font-size: 40px;
         }
 
+        &__star-7 {
+            display: none;
+        }
+
+        &__star-6 {
+            display: none;
+        }
+
+        &__star-8 {
+            display: none;
+        }
+
+        &__star-10 {
+            display: none;
+        }
+
+
 
     }
 
@@ -126,6 +143,7 @@
         }
 
         &-content__text {
+            width: auto;
             font-size: 32px;
         }
 
