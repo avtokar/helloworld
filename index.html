@@ -1,11 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-   <script src="script.js"></script> 
+    <div class="header center">
+        <img class="header__star-1" src="image/group_star.svg" alt="Звезда">
+        <img class="header__star-2" src="image/Star_4.svg" alt="Звезда">
+        <img class="header__star-3" src="image/Star_5.svg" alt="Звезда">
+        <img class="header__star-4" src="image/Star_3.svg" alt="Звезда">
+        <img class="header__star-5" src="image/Star_2.svg" alt="Звезда">
+        <div class="heading center">
+            <h1 class="heading__name">Добро пожаловать на мой сайт мини-игр</h1>
+            <p class="heading__about">Тебе предстоит пройти несколько увлекательных игр. Если готов, нажимай
+                <span class="heading__about-text">«Поехали!»</span> и <span
+                    class="heading__about-text">приступай.</span>
+            </p>
+            <a class="heading__button" href="#scroll">Поехали!</a>
+        </div>
+
+    </div>
+    <div class="menu center-menu">
+        <div class="menu__contener">
+            <a href="#" class="menu__contener-choice">Викторина</a>
+            <img src="image/Star.svg" alt="Звезда" class="menu-star">
+            <a href="#" class="menu__contener-choice">Угадай число</a>
+            <img src="image/Star.svg" alt="Звезда" class="menu-star">
+            <a href="#" class="menu__contener-choice">Переверни текст</a>
+            <img src="image/Star.svg" alt="Звезда" class="menu-star">
+            <a href="#" class="menu__contener-choice">Простая арифметика</a>
+            <img src="image/Star.svg" alt="Звезда" class="menu-star">
+            <a href="#" class="menu__contener-choice">Камень, ножницы, бумага</a>
+            <img src="image/Star.svg" alt="Звезда" class="menu-star">
+            <a href="#" class="menu__contener-choice">Генератор случайных чисел</a>
+            <img src="image/Star.svg" alt="Звезда" class="menu-star">
+        </div>
+    </div>
+    <section class="about-game center" id="scroll">
+        <h2 class="about-game__text">Об играх</h2>
+        <p class="about-game__text2">В моей коллекции представлено 6 игр на разные темы. Игры несложные — в них может
+            поиграть каждый. Все игры доступны для пользования.</p>
+        <img class="about-game__img" src="image/Star_1.svg" alt="Звезда">
+        <div class="about-content">
+            <div class="about-content__box">
+                <a href="#ScrollGuessNumber" class="about-content__box1">
+                    <img src="image/game_1.svg" alt="Игра">
+                    <p class="about-content__box-text">Игра №1</p>
+                    <p class="about-content__box-text2">Угадай число</p>
+                </a>
+                <a href="#" class="about-content__box1 about-content__box1_big">
+                    <img class="about-content__box-img" src="image/game_4.jpg" alt="Игра">
+                    <p class="about-content__box-text">Игра №4</p>
+                    <p class="about-content__box-text2">Камень, ножницы, бумага</p>
+                </a>
+            </div>
+            <div class="about-content__box">
+                <a href="#ScrollArithmeticGame" class="about-content__box1 about-content__box1_big2">
+                    <img src="image/game_2.svg" alt="Игра">
+                    <p class="about-content__box-text">Игра №2</p>
+                    <p class="about-content__box-text2">Простая арифметика</p>
+                </a>
+                <a href="#" class="about-content__box1 about-content__box1_big2">
+                    <img src="image/game_5.svg" alt="Игра">
+                    <p class="about-content__box-text">Игра №5</p>
+                    <p class="about-content__box-text2">Пролстая викторина</p>
+                </a>
+            </div>
+            <div class="about-content__box">
+                <a href="#" class="about-content__box1">
+                    <img src="image/game_3.svg" alt="Игра">
+                    <p class="about-content__box-text">Игра №3</p>
+                    <p class="about-content__box-text2">Переверни текст</p>
+                </a>
+                <a href="#" class="about-content__box1 about-content__box1_big">
+                    <img src="image/game_6.svg" alt="Игра">
+                    <p class="about-content__box-text">Игра №6</p>
+                    <p class="about-content__box-text2">Генератор cлучайных цветов</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="mini-game center">
+        <h2 class="mini-game__text">Мини-игры</h2>
+        <img class="mini-game__star-7" src="image/star_7.svg" alt="Звезда">
+        <img class="mini-game__star-6" src="image/star_6.svg" alt="Звезда">
+        <div class="game-contener">
+            <div class="game-box">
+                <img class="game-box-img" src="image/game_11.svg" alt="">
+                <div class="game-box-content" id="ScrollGuessNumber">
+                    <p class="game-box-content__text">Угадай число</p>
+                    <p class="game-box-content__text2">Попробуй угадать случайное число от 1 до 100</p>
+                    <button class="game-box-button" onclick="startGame()">Играть</button>
+                </div>
+            </div>
+            <div class="game-box-back">
+                <img class="game-box-img" src="image/game_22.svg" alt="">
+                <div class="game-box-content" id="ScrollArithmeticGame">
+                    <p class="game-box-content__text">Простая арифметика</p>
+                    <p class="game-box-content__text2">Попробуй решить простые арифметические задачи.</p>
+                    <button class="game-box-button" onclick="startGameArithmetic()">Играть</button>
+                </div>
+            </div>
+            <div class="game-box">
+                <img class="game-box-img" src="image/game_33.svg" alt="">
+                <div class="game-box-content">
+                    <p class="game-box-content__text">Переверни текст</p>
+                    <p class="game-box-content__text2">Попробуй ввести текст, который будет перевернут.</p>
+                    <button class="game-box-button">Играть</button>
+                </div>
+            </div>
+            <div class="game-box-back">
+                <img class="game-box-img" src="image/game_44.jpg" alt="">
+                <div class="game-box-content">
+                    <p class="game-box-content__text">Камень, ножницы, бумага</p>
+                    <p class="game-box-content__text2">Сыграй в популярную игру против компьютера.</p>
+                    <button class="game-box-button">Играть</button>
+                </div>
+            </div>
+            <div class="game-box">
+                <img class="game-box-img" src="image/game_55.svg" alt="">
+                <div class="game-box-content">
+                    <p class="game-box-content__text">Викторина</p>
+                    <p class="game-box-content__text2">Отвечай на вопросы викториныс вариантами ответов.</p>
+                    <button class="game-box-button">Играть</button>
+                </div>
+            </div>
+            <div class="game-box-back">
+                <img class="game-box-img" src="image/game_66.svg" alt="">
+                <div class="game-box-content">
+                    <p class="game-box-content__text">Генератор случайных цветов</p>
+                    <p class="game-box-content__text2">Игра, в которой при клике на кнопку фон страницы меняется на
+                        случайный.</p>
+                    <button class="game-box-button">Играть</button>
+                </div>
+            </div>
+
+        </div>
+        <img class="mini-game__star-10" src="image/star_10.svg" alt="Звезда">
+        <img class="mini-game__star-8" src="image/star_8.svg" alt="Звезда">
+    </section>
+    <footer class="footer center">
+        <h2 class="footer__text">Все права защищены</h2>
+    </footer>
+    <script src="script.js"></script>
 </body>
+
 </html>
