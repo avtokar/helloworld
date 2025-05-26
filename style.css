@@ -280,7 +280,6 @@ button {
   border-radius: 30px;
 }
 .game-box-content {
-  max-width: 504px;
   padding: 48px;
 }
 .game-box-content__text {
@@ -401,6 +400,18 @@ button {
   .mini-game__text {
     font-size: 40px;
   }
+  .mini-game__star-7 {
+    display: none;
+  }
+  .mini-game__star-6 {
+    display: none;
+  }
+  .mini-game__star-8 {
+    display: none;
+  }
+  .mini-game__star-10 {
+    display: none;
+  }
   .game-contener {
     gap: 24px;
     padding-top: 48px;
@@ -421,6 +432,7 @@ button {
     align-items: center;
   }
   .game-box-content__text {
+    width: auto;
     font-size: 32px;
   }
   .game-box-content__text2 {
