@@ -63,3 +63,7 @@ function getRandomNumberInRange(min, max) {
   console.log(randomNumber);
   return randomNumber;
 }
+
+//Задача № 8
+const currentDate = new Date();
+console.log(currentDate);
