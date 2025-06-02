@@ -87,7 +87,7 @@ function startReverseText() {
     }
 
     const playAgain = confirm("Хотите сыграть еще раз?");
-  if (playAgain) {
+    if (playAgain) {
       reverseTextGame();
     } else {
       alert("Спасибо за игру! До новых встреч.");
@@ -95,4 +95,51 @@ function startReverseText() {
   }
 
   reverseTextGame();
+}
+
+//Игра "Викторина"
+const quiz = [
+  {
+    question: "Какой цвет небо?",
+    options: ["1. Красный", "2. Синий", "3. Зеленый"],
+    correctAnswer: 2 // номер правильного ответа
+  },
+  {
+    question: "Сколько дней в неделе?",
+    options: ["1. Шесть", "2. Семь", "3. Восемь"],
+    correctAnswer: 2
+  },
+  {
+    question: "Сколько у человека пальцев на одной руке?",
+    options: ["1. Четыре", "2. Пять", "3. Шесть"],
+    correctAnswer: 2
+  }
+];
+
+function startQuizGame() {
+  let score = 0;
+
+  function askQuestion(questionIndex) {
+    if (questionIndex < quiz.length) {
+      const question = quiz[questionIndex];
+      const userAnswer = prompt(`${question.question}\n${question.options.join("\n")}`);
+      if (parseInt(userAnswer) === question.correctAnswer) {
+        score++;
+        alert("Правильно!");
+      } else {
+        alert("Неправильно.");
+      }
+      askQuestion(questionIndex + 1);
+    } else {
+      alert(`Викторина завершена! Вы набрали ${score} баллов из ${quiz.length}.`);
+      const playAgain = confirm("Хотите сыграть ещё раз?");
+      if (playAgain) {
+        startQuizGame();
+      } else {
+        alert("Спасибо за игру! До новых встреч.");
+      }
+    }
+  }
+
+  askQuestion(0);
 }
