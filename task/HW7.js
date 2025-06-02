@@ -21,7 +21,7 @@ const floorNumber = Math.floor(number);
 console.log(floorNumber); 
 
 const ceilNumber = Math.ceil(number);
-console.log(ceilNumber); // Выводит: 33
+console.log(ceilNumber); 
 
 const roundNumber = Math.round(number);
 console.log(roundNumber); 
@@ -42,3 +42,17 @@ function generateRandomNumber() {
   console.log(randomNumber);
 }
 
+//Задача № 6
+
+function generateRandomArray(maxNumber) {
+  const arrayLength = Math.floor(maxNumber / 2); 
+  const randomArray = [];
+
+  for (let i = 0; i < arrayLength; i++) {
+    const randomNumber = Math.floor(Math.random() * (maxNumber + 1)); 
+    randomArray.push(randomNumber);
+  }
+
+  console.log(randomArray);
+  return randomArray;
+}
