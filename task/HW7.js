@@ -25,3 +25,14 @@ console.log(ceilNumber); // Выводит: 33
 
 const roundNumber = Math.round(number);
 console.log(roundNumber); 
+
+
+//Задача № 4
+const numbers = [52, 53, 49, 77, 21, 32];
+
+const minValue = Math.min(...numbers);
+console.log(minValue); 
+
+const maxValue = Math.max(...numbers);
+console.log(maxValue); 
+
