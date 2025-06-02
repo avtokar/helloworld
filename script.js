@@ -86,8 +86,8 @@ function startReverseText() {
       reverseTextGame();
     }
 
-    const playAgain = prompt("Хотите продолжить игру или выйти? (продолжить/выйти)");
-    if (playAgain.toLowerCase() === "продолжить") {
+    const playAgain = confirm("Хотите сыграть еще раз?");
+  if (playAgain) {
       reverseTextGame();
     } else {
       alert("Спасибо за игру! До новых встреч.");
