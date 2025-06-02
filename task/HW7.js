@@ -56,3 +56,10 @@ function generateRandomArray(maxNumber) {
   console.log(randomArray);
   return randomArray;
 }
+
+//Задача № 7
+function getRandomNumberInRange(min, max) {
+  const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  console.log(randomNumber);
+  return randomNumber;
+}
