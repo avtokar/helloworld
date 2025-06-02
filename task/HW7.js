@@ -67,3 +67,8 @@ function getRandomNumberInRange(min, max) {
 //Задача № 8
 const currentDate = new Date();
 console.log(currentDate);
+
+//Задача № 9
+const currentDate = new Date();
+const futureDate = new Date(currentDate.getTime() + 73 * 24 * 60 * 60 * 1000);
+console.log(futureDate);
