@@ -65,7 +65,7 @@ function getRandomNumberInRange(min, max) {
 }
 
 //Задача № 8
-const currentDate = new Date();
+const actualDate = new Date();
 console.log(currentDate);
 
 //Задача № 9
