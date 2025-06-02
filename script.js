@@ -68,3 +68,31 @@ function startGameArithmetic() {
     alert("Спасибо за игру! До свидания.");
   }
 }
+
+
+//Игра "Перерни текст"
+
+function startReverseText() {
+  alert("Добро пожаловать в игру 'Переверни текст'!");
+  alert("Введите текст, и я переверну его.");
+
+  function reverseTextGame() {
+    const inputText = prompt("Введите ваш текст:");
+    if (inputText) {
+      const reversedText = inputText.split('').reverse().join('');
+      alert(`Перевернутый текст: ${reversedText}`);
+    } else {
+      alert("Вы не ввели текст. Попробуйте еще раз.");
+      reverseTextGame();
+    }
+
+    const playAgain = prompt("Хотите продолжить игру или выйти? (продолжить/выйти)");
+    if (playAgain.toLowerCase() === "продолжить") {
+      reverseTextGame();
+    } else {
+      alert("Спасибо за игру! До новых встреч.");
+    }
+  }
+
+  reverseTextGame();
+}
