@@ -143,3 +143,32 @@ function startQuizGame() {
 
   askQuestion(0);
 }
+
+//Игра камень, ножницы, бумага
+function startTsuefaGame() {
+  const options = ['камень', 'ножницы', 'бумага'];
+  const computerChoice = options[Math.floor(Math.random() * options.length)];
+
+  const userChoice = prompt('Выберите «камень», «ножницы» или «бумага»');
+
+  let result;
+  if (userChoice === computerChoice) {
+    result = 'Ничья';
+  } else if ((userChoice === 'камень' && computerChoice === 'ножницы') ||
+    (userChoice === 'ножницы' && computerChoice === 'бумага') ||
+    (userChoice === 'бумага' && computerChoice === 'камень')) {
+    result = 'Вы победили';
+  } else {
+    result = 'Компьютер победил';
+  }
+
+  alert(`Ваш выбор: ${userChoice}\nВыбор компьютера: ${computerChoice}\nРезультат: ${result}`);
+
+  const playAgain = confirm("Хотите сыграть ещё раз?");
+  if (playAgain) {
+    startTsuefaGame();
+  } else {
+    alert("Спасибо за игру! До новых встреч.");
+  }
+
+}
