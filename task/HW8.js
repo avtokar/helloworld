@@ -14,12 +14,14 @@ console.log(people.sort((a, b) => a.age - b.age));
 function printCurrentDate() {
   const intervalId = setInterval(() => {
     console.log(new Date());
-  }, 3000); // 3000 миллисекунд = 3 секунды
+  }, 3000); 
 
   setTimeout(() => {
     clearInterval(intervalId);
     console.log('30 секунд прошло');
-  }, 30000); // 30000 миллисекунд = 30 секунд
+  }, 30000); 
 }
 
 printCurrentDate();
+
+//Задание № 4
