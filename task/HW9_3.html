@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bзменение текста в заголовке</title>
+</head>
+
+<body>
+    <h1>Это заголовок, текст которого будет изменяться</h1>
+    <button>Изменить текст</button>
+
+    <script>
+
+        const header = document.querySelector('h1');
+        const button = document.querySelector('button');
+
+        button.addEventListener('click', function () {
+            header.textContent = 'Текст заголовка был изменён';
+        });
+    </script>
+</body>
+
+</html>
