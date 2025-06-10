@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Изменение текста у элементов с классом description</title>
 </head>
+
 <body>
-    
+    <p class="description">Оригинальный текст 1</p>
+    <p>Не имеет класса description</p>
+    <p class="description">Оригинальный текст 2</p>
+    <p>Ещё один без класса description</p>
+    <p class="description">Оригинальный текст 3</p>
+
+    <script>
+        const descriptions = document.querySelectorAll('.description');
+
+        descriptions.forEach(function (description) {
+            description.textContent = 'Новый текст';
+        });
+    </script>
 </body>
+
 </html>
