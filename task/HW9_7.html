@@ -4,7 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+    <title>Удаления первого элемента с классом description</title>
+</head>
+
+<body>
+    <p class="description">Первый абзац с классом description</p>
+    <p>Абзац без класса description</p>
+    <p class="description">Второй абзац с классом description</p>
+    <p>Ещё один абзац без класса description</p>
+
+    <button>Удалить элемент</button>
+
+    <script>
+        const button = document.querySelector('button');
+
+        button.addEventListener('click', function () {
+            const firstDescription = document.querySelector('.description');
+            firstDescription.remove();
+
+        });
+    </script>
 </body>
 
 </html>
