@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изменение цвета текста</title>
+</head>
+
+<body>
+    <p>Это абзац, цвет текста которого будет изменяться</p>
+    <button>Изменить цвет</button>
+
+    <script>
+        const paragraph = document.querySelector('p');
+        const button = document.querySelector('button');
+
+        button.addEventListener('click', function () {
+
+            paragraph.style.color = 'blue';
+        });
+    </script>
+</body>
+
+</html>
