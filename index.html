@@ -80,7 +80,7 @@
                     <p class="about-content__box-text">Игра №3</p>
                     <p class="about-content__box-text2">Переверни текст</p>
                 </a>
-                <a href="#" class="about-content__box1 about-content__box1_big">
+                <a href="#ScrollColorGame" class="about-content__box1 about-content__box1_big">
                     <img src="image/game_6.svg" alt="Игра">
                     <p class="about-content__box-text">Игра №6</p>
                     <p class="about-content__box-text2">Генератор cлучайных цветов</p>
@@ -134,13 +134,13 @@
                     <button class="game-box-button" onclick="startQuizGame()">Играть</button>
                 </div>
             </div>
-            <div class="game-box-back">
+            <div class="game-box-back" id="colorGame">
                 <img class="game-box-img" src="image/game_66.svg" alt="">
-                <div class="game-box-content">
+                <div class="game-box-content" id="ScrollColorGame">
                     <p class="game-box-content__text">Генератор случайных цветов</p>
                     <p class="game-box-content__text2">Игра, в которой при клике на кнопку фон страницы меняется на
                         случайный.</p>
-                    <button class="game-box-button">Играть</button>
+                    <button class="game-box-button" onclick="changeBackgroundColor()">Играть</button>
                 </div>
             </div>
 
