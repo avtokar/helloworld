@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скрытие и показ текста в заголовке</title>
+</head>
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
+<body>
+    <h1>Это заголовок, который будет скрываться и показываться</h1>
+    <button>Скрыть/показать заголовок</button>
+
+    <script>
+        const header = document.querySelector('h1');
+        const button = document.querySelector('button');
+
+        button.addEventListener('click', function () {
+
+            if (header.classList.contains('hidden')) {
+
+                header.classList.remove('hidden');
+            } else {
+                header.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>
