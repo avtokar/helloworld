@@ -27,13 +27,7 @@ commentForm.addEventListener('submit', function (event) {
     const likeEl = document.createElement('div')
     likeEl.classList.add('likes');
     likeEl.innerHTML = `<span id="likesCount" class="likes-counter">0</span>
-    <button id=likeButt class="like-button -active-like"></button>`;
-
-   /*  let currentCount = 0;
-    likeButt.addEventListener('click', () => {
-        likesCount.textContent = ++currentCount;
-        console.log(likesCount);
-    }); */
+    <button id=likeButt class="like-button"></button>`;
 
     commentHeader.innerHTML = `
 <p><strong>${usernameInput.value}</strong></p>`;
@@ -61,6 +55,28 @@ commentForm.addEventListener('submit', function (event) {
     commentForm.reset();
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const commentsContainer = document.querySelector('.comments');
+
+    commentsContainer.addEventListener('click', function (event) {
+        const target = event.target;
+        if (target.classList.contains('like-button')) {
+            const likeButton = target;
+            const likeCountElement = likeButton.parentNode.querySelector('.likes-counter');
+            const currentCount = parseInt(likeCountElement.textContent, 10);
+
+            if (likeButton.classList.contains('-active-like')) {
+                // Убираем лайк
+                likeButton.classList.remove('-active-like');
+                likeCountElement.textContent = currentCount - 1;
+            } else {
+                // Ставим лайк
+                likeButton.classList.add('-active-like');
+                likeCountElement.textContent = currentCount + 1;
+            }
+        }
+    });
+});
 
 
 
