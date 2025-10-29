@@ -1,20 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const commentsData = [
-        {
-            author: 'Глеб Фокин',
-            date: '12.02.22 12:18',
-            text: 'Это будет первый комментарий на этой странице',
-            likes: 3
-        },
-        {
-            author: 'Варвара Н.',
-            date: '13.02.22 19:22',
-            text: 'Мне нравится как оформлена эта страница! ❤',
-            likes: 75
-        }
-    ];
+    const apiUrl = 'https://wedev-api.sky.pro/api/v1/igor-syrovatko/comments';
+    const commentsData = [];
+    const commentsContainer = document.querySelector('.comments');
+    const commentForm = document.querySelector('#comment-form');
+    const usernameInput = document.querySelector('#username-input');
+    const commentInput = document.querySelector('#comment-input');
+
+    // Функция для очистки предыдущих комментариев
+    function clearComments() {
+        commentsContainer.innerHTML = '';
+    }
+
     function sanitizeText(text) {
-        // Замена опасных символов
         return text
             .replaceAll('<', '&lt;')
             .replaceAll('>', '&gt;')
@@ -25,78 +22,99 @@ document.addEventListener('DOMContentLoaded', function () {
     function createCommentHTML(comment) {
         const sanitizedText = sanitizeText(comment.text);
         return `
-                    <li class="comment" data-author="${comment.author}" data-text="${sanitizedText}">
-                        <div class="comment-header">
-                            <div>${comment.author}</div>
-                            <div>${comment.date}</div>
-                        </div>
-                        <div class="comment-body">
-                            <div class="comment-text" data-author="${comment.author}">
-                            ${sanitizedText}
-                            </div>
-                        </div>
-                        <div class="comment-footer">
-                            <div class="likes">
-                                <span class="likes-counter">${comment.likes}</span>
-                                <button class="like-button"></button>
-                            </div>
-                        </div>
-                    </li>
-                `;
+            <li class="comment" data-author="${comment.author.name}" data-text="${sanitizedText}">
+                <div class="comment-header">
+                    <div>${comment.author.name}</div>
+                    <div>${new Date(comment.date).toLocaleString('ru-RU')}</div>
+                </div>
+                <div class="comment-body">
+                    <div class="comment-text" data-author="${comment.author.name}">
+                    ${sanitizedText}
+                    </div>
+                </div>
+                <div class="comment-footer">
+                    <div class="likes">
+                        <span class="likes-counter">${comment.likes}</span>
+                        <button class="like-button"></button>
+                    </div>
+                </div>
+            </li>
+        `;
+    }
+// Получение комментариев из API
+    async function fetchComments() {
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error('Ошибка при получении комментариев: ' + response.status);
+            }
+            const data = await response.json();
+            clearComments(); // Очищаем предыдущие комментарии
+            commentsData.length = 0; 
+            data.comments.forEach(comment => {
+                commentsData.push(comment); 
+                const commentHTML = createCommentHTML(comment);
+                commentsContainer.insertAdjacentHTML('beforeend', commentHTML);
+            });
+        } catch (error) {
+            console.error(error);
+            alert("Не удалось загрузить комментарии: " + error.message); // Уведомление об ошибке
+        }
+    }
+ // Добавление нового комментария в API
+    async function postComment(author, text) {
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                body: JSON.stringify({ text: text, name: author })
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error);
+            }
+            const newComment = {
+            author: { name: author },
+            date: new Date().toISOString(),
+            text: text,
+            likes: 0 // Начальное количество лайков
+             };
+             commentsData.push(newComment);
+
+            await fetchComments(); // После добавления нового комментария обновляем список
+        } catch (error) {
+            alert(error.message); // Уведомление об ошибке
+        }
     }
 
-    const commentsContainer = document.querySelector('.comments');
-    const commentForm = document.querySelector('#comment-form');
-    const usernameInput = document.querySelector('#username-input');
-    const commentInput = document.querySelector('#comment-input');
-    commentsData.forEach(comment => {
-        const commentHTML = createCommentHTML(comment);
-        commentsContainer.insertAdjacentHTML('beforeend', commentHTML);
-    });
-    commentForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Предотвращаем стандартную отправку формы
+    // Получаем комментарии при загрузке страницы
+    fetchComments();
 
-        // Получаем значения из полей ввода
+    commentForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
         const author = usernameInput.value.trim();
         const text = commentInput.value.trim();
-        const date = new Date().toLocaleDateString('ru-RU', {
-            year: '2-digit',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
 
-        // Создаём новый объект комментария
-        const newComment = {
-            author: author,
-            date: date,
-            text: text,
-            likes: 0
-        };
-       
-        // Добавляем новый комментарий в массив
-        commentsData.push(newComment);
+        if (author.length < 3 || text.length < 3) {
+            alert('Имя и текст комментария должны содержать минимум 3 символа.');
+            return;
+        }
 
-        // Генерируем HTML для нового комментария и добавляем его в контейнер
-        const newCommentHTML = createCommentHTML(newComment);
-        commentsContainer.insertAdjacentHTML('beforeend', newCommentHTML);
+        // Отправляем новый комментарий на сервер
+        await postComment(author, text);
 
         // Очищаем поля ввода
-        document.querySelector('#username-input').value = '';
-        document.querySelector('#comment-input').value = '';
+        usernameInput.value = '';
+        commentInput.value = '';
     });
 
-
-    // Добавляем обработчик клика на комментарии
     commentsContainer.addEventListener('click', function (event) {
-        const target = event.target.closest('.comment');
-        if (target) {
-            const author = target.dataset.author;
-            const text = target.dataset.text;
-            commentInput.value = `<${text} (автор: ${author})>`;
-        }
-    });
+    const target = event.target.closest('.comment');
+    if (target) {
+        const author = target.dataset.author;
+        const text = target.dataset.text;
+        commentInput.value = `<${text} (автор: ${author})>`; 
+    }
+});
 
     commentsContainer.addEventListener('click', function (event) {
         const target = event.target;
@@ -106,15 +124,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const currentCount = parseInt(likeCountElement.textContent, 10);
 
             if (likeButton.classList.contains('-active-like')) {
-                // Убираем лайк
                 likeButton.classList.remove('-active-like');
                 likeCountElement.textContent = currentCount - 1;
             } else {
-                // Ставим лайк
                 likeButton.classList.add('-active-like');
                 likeCountElement.textContent = currentCount + 1;
             }
         }
     });
-
 });
