@@ -163,20 +163,25 @@ document.addEventListener('DOMContentLoaded', function () {
         commentInput.value = `<${text} (автор: ${author})>`; 
     }
 });
-
-    commentsContainer.addEventListener('click', function (event) {
-        const target = event.target;
-        if (target.classList.contains('like-button')) {
-            const likeButton = target;
-            const likeCountElement = likeButton.parentNode.querySelector('.likes-counter');
-            const currentCount = parseInt(likeCountElement.textContent, 10);
+    function delay(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    commentsContainer.addEventListener('click', async function (event) {
+        const target = event.target.closest('.like-button'); // Используем closest для автономности кнопки лайка
+        if (target) {
+        const likeButton = target;
+        const likeCountElement = likeButton.parentNode.querySelector('.likes-counter');
+        const currentCount = parseInt(likeCountElement.textContent, 10);
+        likeButton.classList.add('-loading-like');
+        await delay(1000);
+        likeButton.classList.remove('-loading-like');
 
             if (likeButton.classList.contains('-active-like')) {
-                likeButton.classList.remove('-active-like');
-                likeCountElement.textContent = currentCount - 1;
+            likeCountElement.textContent = currentCount - 1; // Убираем лайк
+            likeButton.classList.remove('-active-like'); // Удаляем активное состояние
             } else {
-                likeButton.classList.add('-active-like');
-                likeCountElement.textContent = currentCount + 1;
+            likeCountElement.textContent = currentCount + 1; // Добавляем лайк
+            likeButton.classList.add('-active-like'); // Добавляем активное состояние
             }
         }
     });
