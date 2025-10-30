@@ -6,6 +6,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const usernameInput = document.querySelector('#username-input');
     const commentInput = document.querySelector('#comment-input');
 
+    let loadingMessage; // Переменная для хранения сообщения о загрузке
+// Функция для отображения или скрытия сообщения о загрузке
+           function createLoadingMessage() {
+        loadingMessage = document.createElement('div');
+        loadingMessage.textContent = 'Загрузка комментариев...'; // Текст сообщения
+        commentsContainer.parentNode.insertBefore(loadingMessage, commentsContainer); // Вставляем сообщение перед списком комментариев
+    }
+
     // Функция для очистки предыдущих комментариев
     function clearComments() {
         commentsContainer.innerHTML = '';
@@ -43,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 // Получение комментариев из API
     function fetchComments() {
+        createLoadingMessage(); // Создаем и отображаем сообщение о загрузке
         return fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -62,6 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch (error => {
             console.error(error);
             alert("Не удалось загрузить комментарии: " + error.message); // Уведомление об ошибке
+        })
+        .finally(() => {
+                // Удаление сообщения о загрузке, если оно существует
+                if (loadingMessage) {
+                    loadingMessage.remove();
+                }
         });
     }
  // Добавление нового комментария в API
