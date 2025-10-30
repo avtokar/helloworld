@@ -7,11 +7,33 @@ document.addEventListener('DOMContentLoaded', function () {
     const commentInput = document.querySelector('#comment-input');
 
     let loadingMessage; // Переменная для хранения сообщения о загрузке
+    let addingCommentMessage; // Переменная для сообщения о добавлении комментария
+
 // Функция для отображения или скрытия сообщения о загрузке
            function createLoadingMessage() {
         loadingMessage = document.createElement('div');
         loadingMessage.textContent = 'Загрузка комментариев...'; // Текст сообщения
         commentsContainer.parentNode.insertBefore(loadingMessage, commentsContainer); // Вставляем сообщение перед списком комментариев
+    }
+
+    // Функция для создания элемента сообщения о добавлении комментария
+    function createAddingCommentMessage() {
+        addingCommentMessage = document.createElement('div');
+        addingCommentMessage.textContent = 'Комментарий добавляется...';
+        commentForm.parentNode.insertBefore(addingCommentMessage, commentForm);
+        commentForm.style.display = 'none'; // Скрываем форму
+    }
+
+    // Функция для очистки предыдущих сообщений
+    function clearMessages() {
+        if (loadingMessage) {
+            loadingMessage.remove();
+            loadingMessage = null;
+        }
+        if (addingCommentMessage) {
+            addingCommentMessage.remove();
+            addingCommentMessage = null;
+        }
     }
 
     // Функция для очистки предыдущих комментариев
@@ -73,14 +95,14 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("Не удалось загрузить комментарии: " + error.message); // Уведомление об ошибке
         })
         .finally(() => {
-                // Удаление сообщения о загрузке, если оно существует
-                if (loadingMessage) {
-                    loadingMessage.remove();
-                }
+                // Удаление сообщения о загрузке
+                clearMessages();
         });
     }
  // Добавление нового комментария в API
     function postComment(author, text) {
+        createAddingCommentMessage(); // Создаем и отображаем сообщение о добавлении комментария
+        
         return fetch(apiUrl, {
             method: 'POST',
             body: JSON.stringify({ text: text, name: author })
@@ -102,6 +124,13 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             alert(error.message); // Уведомление об ошибке
+        })
+        .finally(() => {
+           // Показать форму снова
+           commentForm.style.display = 'block'; // Показать форму снова
+            clearMessages(); // Удаление сообщения о добавлении
+            // commentForm.style.display = 'block';
+                        
         });
     }
 
