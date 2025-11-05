@@ -6,6 +6,36 @@ document.addEventListener('DOMContentLoaded', function () {
     const usernameInput = document.querySelector('#username-input');
     const commentInput = document.querySelector('#comment-input');
 
+    let loadingMessage; // Переменная для хранения сообщения о загрузке
+    let addingCommentMessage; // Переменная для сообщения о добавлении комментария
+
+// Функция для отображения или скрытия сообщения о загрузке
+           function createLoadingMessage() {
+        loadingMessage = document.createElement('div');
+        loadingMessage.textContent = 'Загрузка комментариев...'; // Текст сообщения
+        commentsContainer.parentNode.insertBefore(loadingMessage, commentsContainer); // Вставляем сообщение перед списком комментариев
+    }
+
+    // Функция для создания элемента сообщения о добавлении комментария
+    function createAddingCommentMessage() {
+        addingCommentMessage = document.createElement('div');
+        addingCommentMessage.textContent = 'Комментарий добавляется...';
+        commentForm.parentNode.insertBefore(addingCommentMessage, commentForm);
+        commentForm.style.display = 'none'; // Скрываем форму
+    }
+
+    // Функция для очистки предыдущих сообщений
+    function clearMessages() {
+        if (loadingMessage) {
+            loadingMessage.remove();
+            loadingMessage = null;
+        }
+        if (addingCommentMessage) {
+            addingCommentMessage.remove();
+            addingCommentMessage = null;
+        }
+    }
+
     // Функция для очистки предыдущих комментариев
     function clearComments() {
         commentsContainer.innerHTML = '';
@@ -42,49 +72,55 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
     }
 // Получение комментариев из API
-    async function fetchComments() {
-        try {
-            const response = await fetch(apiUrl);
-            if (!response.ok) {
-                throw new Error('Ошибка при получении комментариев: ' + response.status);
-            }
-            const data = await response.json();
-            clearComments(); // Очищаем предыдущие комментарии
-            commentsData.length = 0; 
-            data.comments.forEach(comment => {
-                commentsData.push(comment); 
-                const commentHTML = createCommentHTML(comment);
-                commentsContainer.insertAdjacentHTML('beforeend', commentHTML);
-            });
-        } catch (error) {
-            console.error(error);
-            alert("Не удалось загрузить комментарии: " + error.message); // Уведомление об ошибке
-        }
+async function fetchComments() {
+    createLoadingMessage();
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error(`Ошибка при получении комментариев: ${response.status} ${response.statusText}`);
+
+        const data = await response.json();
+        clearComments();
+        commentsData.length = 0;
+        data.comments.forEach(comment => {
+            commentsData.push(comment);
+            const commentHTML = createCommentHTML(comment);
+            commentsContainer.insertAdjacentHTML('beforeend', commentHTML);
+        });
+    } catch (error) {
+        console.error(error);
+        alert("Не удалось загрузить комментарии: " + error.message);
+    } finally {
+        clearMessages();
     }
+}
  // Добавление нового комментария в API
-    async function postComment(author, text) {
-        try {
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                body: JSON.stringify({ text: text, name: author })
-            });
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error);
-            }
-            const newComment = {
+   async function postComment(author, text) {
+    createAddingCommentMessage();
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            body: JSON.stringify({ text: text, name: author })
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error);
+        }
+
+        const newComment = {
             author: { name: author },
             date: new Date().toISOString(),
             text: text,
-            likes: 0 // Начальное количество лайков
-             };
-             commentsData.push(newComment);
-
-            await fetchComments(); // После добавления нового комментария обновляем список
-        } catch (error) {
-            alert(error.message); // Уведомление об ошибке
-        }
+            likes: 0
+        };
+        commentsData.push(newComment);
+        await fetchComments();
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        commentForm.style.display = 'block';
+        clearMessages();
     }
+}
 
     // Получаем комментарии при загрузке страницы
     fetchComments();
@@ -100,13 +136,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Отправляем новый комментарий на сервер
-        await postComment(author, text);
-
-        // Очищаем поля ввода
-        usernameInput.value = '';
-        commentInput.value = '';
+       postComment(author, text).then(() => {
+            // Очищаем поля ввода
+            usernameInput.value = '';
+            commentInput.value = '';
+        });
     });
-
+// Обработчик клика на комментарии
     commentsContainer.addEventListener('click', function (event) {
     const target = event.target.closest('.comment');
     if (target) {
@@ -115,20 +151,25 @@ document.addEventListener('DOMContentLoaded', function () {
         commentInput.value = `<${text} (автор: ${author})>`; 
     }
 });
-
-    commentsContainer.addEventListener('click', function (event) {
-        const target = event.target;
-        if (target.classList.contains('like-button')) {
-            const likeButton = target;
-            const likeCountElement = likeButton.parentNode.querySelector('.likes-counter');
-            const currentCount = parseInt(likeCountElement.textContent, 10);
+    function delay(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    commentsContainer.addEventListener('click', async function (event) {
+        const target = event.target.closest('.like-button'); // Используем closest для автономности кнопки лайка
+        if (target) {
+        const likeButton = target;
+        const likeCountElement = likeButton.parentNode.querySelector('.likes-counter');
+        const currentCount = parseInt(likeCountElement.textContent, 10);
+        likeButton.classList.add('-loading-like');
+        await delay(1000);
+        likeButton.classList.remove('-loading-like');
 
             if (likeButton.classList.contains('-active-like')) {
-                likeButton.classList.remove('-active-like');
-                likeCountElement.textContent = currentCount - 1;
+            likeCountElement.textContent = currentCount - 1; // Убираем лайк
+            likeButton.classList.remove('-active-like'); // Удаляем активное состояние
             } else {
-                likeButton.classList.add('-active-like');
-                likeCountElement.textContent = currentCount + 1;
+            likeCountElement.textContent = currentCount + 1; // Добавляем лайк
+            likeButton.classList.add('-active-like'); // Добавляем активное состояние
             }
         }
     });
