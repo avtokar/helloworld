@@ -72,67 +72,55 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
     }
 // Получение комментариев из API
-    function fetchComments() {
-        createLoadingMessage(); // Создаем и отображаем сообщение о загрузке
-        return fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error`(Ошибка при получении комментариев: ${response.status} ${response.statusText});`
-                }
-                return response.json();
-            })
-            .then(data => {
-                clearComments(); // Очищаем предыдущие комментарии
-                commentsData.length = 0; // Очищаем текущий массив
-                data.comments.forEach(comment => {
-                    commentsData.push(comment); // Добавляем комментарии в массив
-                    const commentHTML = createCommentHTML(comment);
-                    commentsContainer.insertAdjacentHTML('beforeend', commentHTML);
-                });
-            })
-        .catch (error => {
-            console.error(error);
-            alert("Не удалось загрузить комментарии: " + error.message); // Уведомление об ошибке
-        })
-        .finally(() => {
-                // Удаление сообщения о загрузке
-                clearMessages();
+async function fetchComments() {
+    createLoadingMessage();
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error(`Ошибка при получении комментариев: ${response.status} ${response.statusText}`);
+
+        const data = await response.json();
+        clearComments();
+        commentsData.length = 0;
+        data.comments.forEach(comment => {
+            commentsData.push(comment);
+            const commentHTML = createCommentHTML(comment);
+            commentsContainer.insertAdjacentHTML('beforeend', commentHTML);
         });
+    } catch (error) {
+        console.error(error);
+        alert("Не удалось загрузить комментарии: " + error.message);
+    } finally {
+        clearMessages();
     }
+}
  // Добавление нового комментария в API
-    function postComment(author, text) {
-        createAddingCommentMessage(); // Создаем и отображаем сообщение о добавлении комментария
-        
-        return fetch(apiUrl, {
+   async function postComment(author, text) {
+    createAddingCommentMessage();
+    try {
+        const response = await fetch(apiUrl, {
             method: 'POST',
             body: JSON.stringify({ text: text, name: author })
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(errorData => {
-                    throw new Error(errorData.error);
-                });
-            }
-            const newComment = {
-                author: { name: author },
-                date: new Date().toISOString(),
-                text: text,
-                likes: 0 // Начальное количество лайков
-            };
-            commentsData.push(newComment); // обновляем локальный массив комментариев
-            return fetchComments(); // Обновление списка комментариев
-        })
-        .catch(error => {
-            alert(error.message); // Уведомление об ошибке
-        })
-        .finally(() => {
-           // Показать форму снова
-           commentForm.style.display = 'block'; // Показать форму снова
-            clearMessages(); // Удаление сообщения о добавлении
-            // commentForm.style.display = 'block';
-                        
         });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error);
+        }
+
+        const newComment = {
+            author: { name: author },
+            date: new Date().toISOString(),
+            text: text,
+            likes: 0
+        };
+        commentsData.push(newComment);
+        await fetchComments();
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        commentForm.style.display = 'block';
+        clearMessages();
     }
+}
 
     // Получаем комментарии при загрузке страницы
     fetchComments();
