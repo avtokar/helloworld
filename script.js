@@ -6,47 +6,32 @@ document.addEventListener('DOMContentLoaded', function () {
     const usernameInput = document.querySelector('#username-input');
     const commentInput = document.querySelector('#comment-input');
 
-    let loadingMessage; // Переменная для хранения сообщения о загрузке
-    let addingCommentMessage; // Переменная для сообщения о добавлении комментария
+    let loadingMessage = null;
+    let addingCommentMessage = null;
+    let savedUsername = '';
+    let savedComment = '';
 
-// Функция для отображения или скрытия сообщения о загрузке
-           function createLoadingMessage() {
-        loadingMessage = document.createElement('div');
-        loadingMessage.textContent = 'Загрузка комментариев...'; // Текст сообщения
-        commentsContainer.parentNode.insertBefore(loadingMessage, commentsContainer); // Вставляем сообщение перед списком комментариев
+    function createMessage(container, text) {
+        const message = document.createElement('div');
+        message.textContent = text;
+        container.appendChild(message);
+        return message;
     }
 
-    // Функция для создания элемента сообщения о добавлении комментария
-    function createAddingCommentMessage() {
-        addingCommentMessage = document.createElement('div');
-        addingCommentMessage.textContent = 'Комментарий добавляется...';
-        commentForm.parentNode.insertBefore(addingCommentMessage, commentForm);
-        commentForm.style.display = 'none'; // Скрываем форму
-    }
-
-    // Функция для очистки предыдущих сообщений
     function clearMessages() {
-        if (loadingMessage) {
-            loadingMessage.remove();
-            loadingMessage = null;
-        }
-        if (addingCommentMessage) {
-            addingCommentMessage.remove();
-            addingCommentMessage = null;
-        }
+        if (loadingMessage) loadingMessage.remove();
+        if (addingCommentMessage) addingCommentMessage.remove();
+        loadingMessage = null;
+        addingCommentMessage = null;
     }
 
-    // Функция для очистки предыдущих комментариев
     function clearComments() {
         commentsContainer.innerHTML = '';
     }
 
     function sanitizeText(text) {
-        return text
-            .replaceAll('<', '&lt;')
-            .replaceAll('>', '&gt;')
-            .replaceAll('"', '&quot;')
-            .replaceAll('\'', '&#39;');
+        return text.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;').replaceAll('\'', '&#39;');
     }
 
     function createCommentHTML(comment) {
@@ -58,9 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div>${new Date(comment.date).toLocaleString('ru-RU')}</div>
                 </div>
                 <div class="comment-body">
-                    <div class="comment-text" data-author="${comment.author.name}">
-                    ${sanitizedText}
-                    </div>
+                    <div class="comment-text">${sanitizedText}</div>
                 </div>
                 <div class="comment-footer">
                     <div class="likes">
@@ -71,78 +54,108 @@ document.addEventListener('DOMContentLoaded', function () {
             </li>
         `;
     }
-// Получение комментариев из API
-async function fetchComments() {
-    createLoadingMessage();
-    try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error(`Ошибка при получении комментариев: ${response.status} ${response.statusText}`);
 
-        const data = await response.json();
-        clearComments();
-        commentsData.length = 0;
-        data.comments.forEach(comment => {
-            commentsData.push(comment);
-            const commentHTML = createCommentHTML(comment);
-            commentsContainer.insertAdjacentHTML('beforeend', commentHTML);
-        });
-    } catch (error) {
-        console.error(error);
-        alert("Не удалось загрузить комментарии: " + error.message);
-    } finally {
+    async function fetchComments() {
         clearMessages();
-    }
-}
- // Добавление нового комментария в API
-   async function postComment(author, text) {
-    createAddingCommentMessage();
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            body: JSON.stringify({ text: text, name: author })
-        });
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error);
+       loadingMessage = createMessage(commentsContainer, 'Загрузка комментариев...');
+       commentsContainer.insertAdjacentElement('beforebegin', loadingMessage);
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                if (response.status === 500) {
+                    alert('Ошибка сервера. Пожалуйста, попробуйте позже.');
+                }
+                throw new Error(`Ошибка: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            clearComments();
+            commentsData.length = 0;
+            data.comments.forEach(comment => {
+                commentsData.push(comment);
+                commentsContainer.insertAdjacentHTML('beforeend', createCommentHTML(comment));
+            });
+        } catch (error) {
+            alert("Не удалось загрузить комментарии: " + error.message);
+        } finally {
+            clearMessages();
         }
-
-        const newComment = {
-            author: { name: author },
-            date: new Date().toISOString(),
-            text: text,
-            likes: 0
-        };
-        commentsData.push(newComment);
-        await fetchComments();
-    } catch (error) {
-        alert(error.message);
-    } finally {
-        commentForm.style.display = 'block';
-        clearMessages();
     }
-}
 
-    // Получаем комментарии при загрузке страницы
+    async function postComment(author, text) {
+        addingCommentMessage = createMessage(commentForm.parentNode, 'Комментарий добавляется...');
+        commentForm.style.display = 'none';
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                body: JSON.stringify({ text, name: author })
+            });
+
+            if (!response.ok) {
+                if (response.status === 400) {
+                    alert('Ошибка в отправленных данных. Проверьте и попробуйте еще раз.');
+                } else if (response.status === 500) {
+                    alert('Ошибка сервера. Пожалуйста, попробуйте позже.');
+                }
+                throw new Error(`Ошибка: ${response.statusText}`);
+            }
+
+            const newComment = { author: { name: author }, date: new Date().toISOString(), text, likes: 0 };
+            commentsData.push(newComment);
+            commentsContainer.insertAdjacentHTML('beforeend', createCommentHTML(newComment));
+        } catch (error) {
+            if (!navigator.onLine) {
+                alert('Проблемы с интернет-соединением. Попробуйте позже.');
+            } else {
+                alert(error.message); // Больше деталей о вводе
+            }
+        } finally {
+            commentForm.style.display = 'block';
+            clearMessages();
+            usernameInput.value = savedUsername;
+            commentInput.value = savedComment;
+        }
+    }
+
     fetchComments();
 
-    commentForm.addEventListener('submit', async function (event) {
+    commentForm.addEventListener('submit', function (event) {
         event.preventDefault();
         const author = usernameInput.value.trim();
         const text = commentInput.value.trim();
+
+        // Сохраняем введенные данные в переменные
+        savedUsername = author;
+        savedComment = text;
+
+        if (!navigator.onLine) {
+            alert('Вы потеряли подключение к интернету. Пожалуйста, восстановите его и попробуйте снова.');
+            return;
+        }
 
         if (author.length < 3 || text.length < 3) {
             alert('Имя и текст комментария должны содержать минимум 3 символа.');
             return;
         }
 
-        // Отправляем новый комментарий на сервер
-       postComment(author, text).then(() => {
-            // Очищаем поля ввода
+        postComment(author, text).then(() => {
             usernameInput.value = '';
             commentInput.value = '';
+            savedUsername = '';
+            savedComment = '';
         });
     });
-// Обработчик клика на комментарии
+
+    // Используем событие input для отслеживания изменений в полях ввода
+    usernameInput.addEventListener('input', function () {
+        savedUsername = usernameInput.value.trim();
+    });
+
+    commentInput.addEventListener('input', function () {
+        savedComment = commentInput.value.trim();
+    });
+
+    // Обработчик клика на комментарии
     commentsContainer.addEventListener('click', function (event) {
     const target = event.target.closest('.comment');
     if (target) {
