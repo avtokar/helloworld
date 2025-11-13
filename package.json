@@ -18,7 +18,7 @@
     "url": "https://github.com/GlebkaF/webdev-dom-homework/issues"
   },
   "homepage": "https://github.com/GlebkaF/webdev-dom-homework#readme",
-  "dependencies": {
+  "devDependencies": {
     "prettier": "^3.6.2"
   }
 }
