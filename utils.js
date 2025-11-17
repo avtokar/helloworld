@@ -1,14 +1,4 @@
-export function createMessage(container, text) {
-  const message = document.createElement("div");
-  message.textContent = text;
-  container.appendChild(message);
-  return message;
-}
-
-export function clearMessages() {
-  const messages = document.querySelectorAll(".message");
-  messages.forEach((message) => message.remove());
-}
+// utils.js
 
 export function sanitizeText(text) {
   return text
@@ -16,4 +6,8 @@ export function sanitizeText(text) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+export function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
