@@ -44,14 +44,29 @@ export class CommentsApp {
       clearMessages();
     }
   }
-
   async submitComment(author, text) {
-    let msg = createMessage(
-      this.commentForm.parentNode,
-      "Комментарий добавляется..."
+    // Сохраняем ссылки на элементы формы
+    const submitButton = this.commentForm.querySelector(
+      'button[type="submit"]'
     );
-    setAddingMessage(msg);
-    this.commentForm.style.display = "none";
+    const inputs = this.commentForm.querySelectorAll("input, textarea");
+
+    // Сохраняем исходные состояния
+    const originalButtonText = submitButton.textContent;
+    const originalOpacity = this.commentForm.style.opacity;
+
+    // Визуально показываем загрузку НЕ меняя структуру
+    submitButton.textContent = "Комментарий добавляется...";
+    submitButton.disabled = true;
+    this.commentForm.style.opacity = "0.7";
+
+    // Добавляем спиннер или индикатор в кнопку
+    submitButton.classList.add("loading");
+
+    // Блокируем все поля ввода
+    inputs.forEach((input) => {
+      input.disabled = true;
+    });
 
     try {
       await postComment(author, text);
@@ -66,11 +81,27 @@ export class CommentsApp {
         "beforeend",
         createCommentHTML(newComment)
       );
+
+      // Очищаем форму после успешной отправки
+      this.usernameInput.value = "";
+      this.commentInput.value = "";
+      this.savedUsername = "";
+      this.savedComment = "";
     } catch (error) {
-      alert("Ошибка отправки комментария");
+      alert("Ошибка отправки комментария: " + error.message);
     } finally {
-      this.commentForm.style.display = "block";
-      clearMessages();
+      // Восстанавливаем форму в исходное состояние
+      submitButton.textContent = originalButtonText;
+      submitButton.disabled = false;
+      submitButton.classList.remove("loading");
+      this.commentForm.style.opacity = originalOpacity;
+
+      // Разблокируем поля ввода
+      inputs.forEach((input) => {
+        input.disabled = false;
+      });
+
+      // Убедимся, что значения восстановлены
       this.usernameInput.value = this.savedUsername;
       this.commentInput.value = this.savedComment;
     }
