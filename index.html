@@ -1,25 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+  <head>
+    <title>Проект "Комменты"</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<head>
-  <title>Проект "Комменты"</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-
-<body>
-  <div class="container">
-    <ul id="comments" class="comments"></ul>
-    <form id="comment-form" class="add-form">
-      <input id="username-input" type="text" class="add-form-name" placeholder="Введите ваше имя" />
-      <textarea id="comment-input" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий"
-        rows="4"></textarea>
-      <div class="add-form-row">
-        <button type="submit" id="submit" class="add-form-button">Написать</button>
-      </div>
-    </form>
-  </div>
-  <script src="script.js"></script>
-</body>
-
+  <body>
+    <div class="container">
+      <ul id="comments" class="comments"></ul>
+      <form id="comment-form" class="add-form">
+        <input
+          id="username-input"
+          type="text"
+          class="add-form-name"
+          placeholder="Введите ваше имя"
+        />
+        <textarea
+          id="comment-input"
+          type="textarea"
+          class="add-form-text"
+          placeholder="Введите ваш коментарий"
+          rows="4"
+        ></textarea>
+        <div class="add-form-row">
+          <button type="submit" id="submit" class="add-form-button">
+            Написать
+          </button>
+        </div>
+      </form>
+    </div>
+    <script type="module" src="main.js"></script>
+  </body>
 </html>
