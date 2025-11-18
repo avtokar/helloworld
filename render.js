@@ -1,5 +1,4 @@
 // render.js
-
 import { sanitizeText } from "./utils.js";
 
 export function createCommentHTML(comment) {
@@ -25,4 +24,10 @@ export function createCommentHTML(comment) {
 
 export function clearComments(container) {
   container.innerHTML = "";
+}
+
+export function renderComments(comments, container) {
+  comments.forEach((comment) => {
+    container.insertAdjacentHTML("beforeend", createCommentHTML(comment));
+  });
 }
