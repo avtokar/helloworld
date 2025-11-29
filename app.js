@@ -1,129 +1,145 @@
-// app.js
+//app.js
+
 import { fetchComments, postComment } from "./commentsApi.js";
-import {
-  createMessage,
-  clearMessages,
-  setLoadingMessage,
-  setAddingMessage,
-} from "./messages.js";
-import { createCommentHTML, clearComments, renderComments } from "./render.js";
-import { handleLikeClick } from "./likes.js";
-import { setupFormHandlers, setupQuoteHandler } from "./form.js";
+import { createCommentHTML, renderComments, clearComments } from "./render.js";
+import { loginApi } from "./loginApi.js";
+import { renderLoginPage } from "./loginView.js";
 
 export class CommentsApp {
   constructor() {
+    this.appRoot = document.getElementById("app");
     this.commentsData = [];
-    this.commentsContainer = document.querySelector(".comments");
-    this.commentForm = document.querySelector("#comment-form");
-    this.usernameInput = document.querySelector("#username-input");
-    this.commentInput = document.querySelector("#comment-input");
-    this.savedUsername = "";
-    this.savedComment = "";
+    this.commentsContainer = null;
+    this.commentForm = null;
+    this.usernameInput = null;
+    this.commentInput = null;
+
+    this.token = null;
+    this.isAuthenticated = false;
   }
 
   async init() {
-    await this.loadComments();
-    this.setupEventListeners();
+    // попытка загрузить токен из локального хранилища
+    this.token = localStorage.getItem("auth_token");
+    this.isAuthenticated = !!this.token;
+
+    // Рендр по состоянию
+    if (this.isAuthenticated) {
+      await this.renderCommentsView();
+      await this.loadComments();
+    } else {
+      this.renderLoginView();
+    }
   }
 
   async loadComments() {
-    clearMessages();
-    let msg = createMessage(this.commentsContainer, "Загрузка комментариев...");
-    setLoadingMessage(msg);
-    this.commentsContainer.insertAdjacentElement("beforebegin", msg);
-
+    clearComments(this.commentsContainer);
     try {
-      const data = await fetchComments();
-      clearComments(this.commentsContainer);
-      this.commentsData.length = 0;
-      this.commentsData.push(...data.comments);
+      const data = await fetchComments(this.token);
+      this.commentsData = data.comments || [];
       renderComments(this.commentsData, this.commentsContainer);
-    } catch (error) {
+    } catch (e) {
       alert("Не удалось загрузить комментарии");
-    } finally {
-      clearMessages();
     }
   }
-  async submitComment(author, text) {
-    // Сохраняем ссылки на элементы формы
-    const submitButton = this.commentForm.querySelector(
-      'button[type="submit"]'
-    );
-    const inputs = this.commentForm.querySelectorAll("input, textarea");
 
-    // Сохраняем исходные состояния
-    const originalButtonText = submitButton.textContent;
-    const originalOpacity = this.commentForm.style.opacity;
+  async onLoginSuccess(token) {
+    this.token = token;
+    this.isAuthenticated = true;
+    localStorage.setItem("auth_token", token);
+    await this.renderCommentsView();
+    await this.loadComments();
+  }
 
-    // Визуально показываем загрузку НЕ меняя структуру
-    submitButton.textContent = "Комментарий добавляется...";
-    submitButton.disabled = true;
-    this.commentForm.style.opacity = "0.7";
+  renderCommentsView() {
+    // Очистим app и вставим базовую разметку для списка и формы
+    this.appRoot.innerHTML = `
+      <div class="comments-section">
+        <ul id="comments" class="comments"></ul>
+        <form id="comment-form" class="add-form">
+          <input id="username-input" type="text" class="add-form-name" readonly value="" />
+          <textarea id="comment-input" class="add-form-text" placeholder="Введите ваш комментарий" rows="4"></textarea>
+          <div class="add-form-row">
+            <button type="submit" id="submit" class="add-form-button">Написать</button>
+          </div>
+        </form>
+      </div>
+      <div><a href="#" id="logout-link">Выйти</a></div>
+    `;
 
-    // Добавляем спиннер или индикатор в кнопку
-    submitButton.classList.add("loading");
+    this.commentsContainer = document.getElementById("comments");
+    this.commentForm = document.getElementById("comment-form");
+    this.usernameInput = document.getElementById("username-input");
+    this.commentInput = document.getElementById("comment-input");
 
-    // Блокируем все поля ввода
-    inputs.forEach((input) => {
-      input.disabled = true;
+    // имя должно приходить с сервера после авторизации; пока пустое
+    this.usernameInput.value = ""; // будет заполняться при авторизации
+
+    // обработка формы
+    this.commentForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const author = this.usernameInput.value.trim();
+      const text = this.commentInput.value.trim();
+      if (!author || !text) {
+        alert("Заполните имя и текст");
+        return;
+      }
+      // авторизация нужна для добавления
+      if (!this.token) {
+        alert("Пожалуйста, авторизуйтесь");
+        return;
+      }
+      try {
+        await postComment(this.token, text);
+        // обновить список
+        const newComment = {
+          author: { name: author },
+          date: new Date().toISOString(),
+          text,
+          likes: 0,
+        };
+        this.commentsData.push(newComment);
+        this.commentsContainer.insertAdjacentHTML(
+          "beforeend",
+          createCommentHTML(newComment)
+        );
+        this.commentInput.value = "";
+      } catch (err) {
+        alert("Ошибка отправки комментария: " + (err?.message ?? err));
+      }
     });
 
-    try {
-      await postComment(author, text);
-      const newComment = {
-        author: { name: author },
-        date: new Date().toISOString(),
-        text,
-        likes: 0,
-      };
-      this.commentsData.push(newComment);
-      this.commentsContainer.insertAdjacentHTML(
-        "beforeend",
-        createCommentHTML(newComment)
-      );
-
-      // Очищаем форму после успешной отправки
-      this.usernameInput.value = "";
-      this.commentInput.value = "";
-      this.savedUsername = "";
-      this.savedComment = "";
-    } catch (error) {
-      alert("Ошибка отправки комментария: " + error.message);
-    } finally {
-      // Восстанавливаем форму в исходное состояние
-      submitButton.textContent = originalButtonText;
-      submitButton.disabled = false;
-      submitButton.classList.remove("loading");
-      this.commentForm.style.opacity = originalOpacity;
-
-      // Разблокируем поля ввода
-      inputs.forEach((input) => {
-        input.disabled = false;
+    // логика выхода
+    const logoutLink = document.getElementById("logout-link");
+    if (logoutLink) {
+      logoutLink.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        localStorage.removeItem("auth_token");
+        this.token = null;
+        this.isAuthenticated = false;
+        this.renderLoginView();
       });
-
-      // Убедимся, что значения восстановлены
-      this.usernameInput.value = this.savedUsername;
-      this.commentInput.value = this.savedComment;
     }
   }
 
-  setupEventListeners() {
-    // Обработчик формы
-    setupFormHandlers(
-      this.commentForm,
-      this.usernameInput,
-      this.commentInput,
-      this.submitComment.bind(this),
-      (username, comment) => {
-        this.savedUsername = username;
-        this.savedComment = comment;
-      }
+  async renderLoginView() {
+    // чистим
+    this.appRoot.innerHTML = "";
+    // показать страницу логина через отдельный компонент
+    renderLoginPage(
+      {
+        onLogin: async (login, password) => {
+          try {
+            const token = await loginApi(login, password);
+            // сохранить имя пользователя в поле readonly после авторизации
+            // и переключиться на страницу комментариев
+            await this.onLoginSuccess(token);
+          } catch (err) {
+            alert("Ошибка авторизации");
+          }
+        },
+      },
+      this.appRoot
     );
-
-    // Обработчик цитирования
-    setupQuoteHandler(this.commentsContainer, this.commentInput);
-
-    // Обработчик лайков
-    this.commentsContainer.addEventListener("click", handleLikeClick);
   }
 }
