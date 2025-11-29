@@ -1,5 +1,5 @@
 // loginView.js
-export function renderLoginPage({ onLogin }, appRoot) {
+export function renderLoginView({ onLogin, onNavigateRegister }, appRoot) {
   if (!appRoot) appRoot = document.getElementById("app");
   appRoot.innerHTML = `
     <div class="login-page">
@@ -10,6 +10,7 @@ export function renderLoginPage({ onLogin }, appRoot) {
         <button type="submit">Войти</button>
       </form>
       <div id="login-error" class="error" style="color:red; display:none;"></div>
+      <p>Нет аккаунта? <a href="#/register" id="to-register">Зарегистрироваться</a></p>
     </div>
   `;
 
@@ -19,12 +20,19 @@ export function renderLoginPage({ onLogin }, appRoot) {
     const login = document.getElementById("login").value;
     const password = document.getElementById("password").value;
     try {
-      const token = await loginApi(login, password);
-      onLogin(login, password, token);
+      const token = await onLogin(login, password);
+      // успешный вход — можно перенаправлять в роутере
     } catch (err) {
       const errEl = document.getElementById("login-error");
       errEl.style.display = "block";
       errEl.textContent = "Неверные учетные данные";
     }
   });
+
+  const toReg = document.getElementById("to-register");
+  if (toReg)
+    toReg.addEventListener("click", (e) => {
+      e.preventDefault();
+      location.hash = "#/register";
+    });
 }

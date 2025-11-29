@@ -11,7 +11,7 @@ export function renderRegisterView({ onRegister }, appRoot) {
         <button type="submit">Зарегистрироваться</button>
       </form>
       <div id="register-error" class="error" style="color:red; display:none;"></div>
-      <p>Уже есть аккаунт? <a href="#/login">Войдите</a></p>
+      <p>Уже есть аккаунт? <a href="#/login" id="to-login">Войти</a></p>
     </div>
   `;
 
@@ -21,13 +21,22 @@ export function renderRegisterView({ onRegister }, appRoot) {
     const login = document.getElementById("reg-login").value;
     const name = document.getElementById("reg-name").value;
     const password = document.getElementById("reg-password").value;
+
     try {
       const token = await onRegister(login, name, password);
-      // после успешной регистрации можно выполнить автоматический вход
+      // после успешной регистрации можно автоматически входить
+      // здесь можно вызвать колбэк повторно или перенаправить
     } catch (err) {
       const errEl = document.getElementById("register-error");
       errEl.style.display = "block";
       errEl.textContent = "Ошибка регистрации: " + (err?.message ?? err);
     }
   });
+
+  const toLogin = document.getElementById("to-login");
+  if (toLogin)
+    toLogin.addEventListener("click", (e) => {
+      e.preventDefault();
+      location.hash = "#/login";
+    });
 }

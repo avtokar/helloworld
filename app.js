@@ -1,14 +1,15 @@
 // app.js
+import { renderComments } from "./render.js";
 import { fetchComments, postComment } from "./commentsApi.js";
-import { createCommentHTML, renderComments, clearComments } from "./render.js";
-import { fetchCurrentUserName } from "./utils.js";
-import { renderLoginPage } from "./loginView.js";
 import { loginApi } from "./loginApi.js";
+import { registerApi } from "./registerApi.js";
+import { renderRegisterView } from "./registerView.js";
+import { fetchCurrentUserName } from "./utils.js";
+import { renderLoginView as renderLogin } from "./loginView.js";
 
 export class CommentsApp {
   constructor() {
     this.appRoot = document.getElementById("app");
-    this.commentsData = [];
     this.commentsContainer = null;
     this.commentForm = null;
     this.usernameInput = null;
@@ -20,13 +21,11 @@ export class CommentsApp {
   }
 
   async init() {
-    // попытка загрузить токен из локального хранилища
     this.token = localStorage.getItem("auth_token");
     this.isAuthenticated = !!this.token;
 
-    // старт маршрутизации
+    // простой маршрутизатор
     window.addEventListener("hashchange", () => this.route());
-
     await this.route();
   }
 
@@ -34,14 +33,16 @@ export class CommentsApp {
     const path = location.hash.replace("#", "") || "/";
     if (path === "/login") {
       await this.renderLoginView();
-      return;
+    } else if (path === "/register") {
+      await this.renderRegisterView();
+    } else {
+      await this.showComments();
     }
-    // по умолчанию показываем комментарии (без токена)
-    await this.showComments();
   }
 
   async showComments() {
-    // рендерим страницу комментариев
+    // рендерим страницу комментариев (как в вашем проекте)
+    // Примерная вставка разметки:
     this.appRoot.innerHTML = `
       <div class="comments-section">
         <ul id="comments" class="comments"></ul>
@@ -53,21 +54,17 @@ export class CommentsApp {
           </div>
         </form>
       </div>
-      <div><a href="#/login" id="login-link">Авторизоваться</a></div>
     `;
-
     this.commentsContainer = document.getElementById("comments");
     this.commentForm = document.getElementById("comment-form");
     this.usernameInput = document.getElementById("username-input");
     this.commentInput = document.getElementById("comment-input");
 
-    // обработчик отправки
     this.commentForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const text = this.commentInput.value.trim();
       if (!text) return;
       if (!this.token) {
-        alert("Пожалуйста, авторизуйтесь");
         location.hash = "#/login";
         return;
       }
@@ -79,36 +76,32 @@ export class CommentsApp {
           text,
           likes: 0,
         };
-        this.commentsData.push(newComment);
+        // append
         this.commentsContainer.insertAdjacentHTML(
           "beforeend",
-          createCommentHTML(newComment)
+          `<li class="comment"><div>${text}</div></li>`
         );
         this.commentInput.value = "";
       } catch (err) {
-        alert("Ошибка отправки комментария: " + (err?.message ?? err));
+        alert("Ошибка отправки: " + (err?.message ?? err));
       }
     });
 
-    // загрузка комментариев
     try {
       const data = await fetchComments(this.token);
-      this.commentsData = data.comments ?? [];
-      renderComments(this.commentsData, this.commentsContainer);
-    } catch (e) {
-      // если без токена — можно показать пустой список
-      this.commentsContainer.innerHTML = "";
+      // отображение списка
+    } catch {
+      // без токена — пустой список
     }
   }
 
   async renderLoginView() {
     this.appRoot.innerHTML = "";
-    renderLoginPage(
+    renderLoginView(
       {
         onLogin: async (login, password) => {
           try {
             const token = await loginApi(login, password);
-            // сохранить токен
             this.token = token;
             this.isAuthenticated = true;
             localStorage.setItem("auth_token", token);
@@ -116,11 +109,30 @@ export class CommentsApp {
             // подстановка имени после авторизации
             const userName = await fetchCurrentUserName(token);
             this.username = userName;
-            // перейти на страницу комментариев
+
             location.hash = "/";
           } catch (err) {
-            alert("Ошибка авторизации");
+            alert("Ошибка авторизации: " + (err?.message ?? err));
           }
+        },
+      },
+      this.appRoot
+    );
+  }
+
+  async renderRegisterView() {
+    renderRegisterView(
+      {
+        onRegister: async (login, name, password) => {
+          const token = await registerApi(login, name, password);
+          if (!token) throw new Error("Регистрация не вернулась токеном");
+          localStorage.setItem("auth_token", token);
+          this.token = token;
+          this.isAuthenticated = true;
+          // подстановка имени после регистрации
+          this.username = await fetchCurrentUserName(token);
+          location.hash = "/";
+          return token;
         },
       },
       this.appRoot

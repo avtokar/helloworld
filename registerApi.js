@@ -7,6 +7,6 @@ export async function registerApi(login, name, password) {
   });
   if (!resp.ok) throw resp;
   const data = await resp.json();
-
+  // возвращаем токен, если он есть
   return data?.user?.token ?? data?.token ?? null;
 }
