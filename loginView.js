@@ -1,5 +1,4 @@
-//loginView.js
-
+// loginView.js
 export function renderLoginPage({ onLogin }, appRoot) {
   if (!appRoot) appRoot = document.getElementById("app");
   appRoot.innerHTML = `
@@ -13,6 +12,7 @@ export function renderLoginPage({ onLogin }, appRoot) {
       <div id="login-error" class="error" style="color:red; display:none;"></div>
     </div>
   `;
+
   const form = document.getElementById("login-form");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();

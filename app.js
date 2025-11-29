@@ -1,9 +1,9 @@
-//app.js
-
+// app.js
 import { fetchComments, postComment } from "./commentsApi.js";
 import { createCommentHTML, renderComments, clearComments } from "./render.js";
-import { loginApi } from "./loginApi.js";
+import { fetchCurrentUserName } from "./utils.js";
 import { renderLoginPage } from "./loginView.js";
+import { loginApi } from "./loginApi.js";
 
 export class CommentsApp {
   constructor() {
@@ -16,6 +16,7 @@ export class CommentsApp {
 
     this.token = null;
     this.isAuthenticated = false;
+    this.username = "";
   }
 
   async init() {
@@ -23,48 +24,36 @@ export class CommentsApp {
     this.token = localStorage.getItem("auth_token");
     this.isAuthenticated = !!this.token;
 
-    // Рендр по состоянию
-    if (this.isAuthenticated) {
-      await this.renderCommentsView();
-      await this.loadComments();
-    } else {
-      this.renderLoginView();
+    // старт маршрутизации
+    window.addEventListener("hashchange", () => this.route());
+
+    await this.route();
+  }
+
+  async route() {
+    const path = location.hash.replace("#", "") || "/";
+    if (path === "/login") {
+      await this.renderLoginView();
+      return;
     }
+    // по умолчанию показываем комментарии (без токена)
+    await this.showComments();
   }
 
-  async loadComments() {
-    clearComments(this.commentsContainer);
-    try {
-      const data = await fetchComments(this.token);
-      this.commentsData = data.comments || [];
-      renderComments(this.commentsData, this.commentsContainer);
-    } catch (e) {
-      alert("Не удалось загрузить комментарии");
-    }
-  }
-
-  async onLoginSuccess(token) {
-    this.token = token;
-    this.isAuthenticated = true;
-    localStorage.setItem("auth_token", token);
-    await this.renderCommentsView();
-    await this.loadComments();
-  }
-
-  renderCommentsView() {
-    // Очистим app и вставим базовую разметку для списка и формы
+  async showComments() {
+    // рендерим страницу комментариев
     this.appRoot.innerHTML = `
       <div class="comments-section">
         <ul id="comments" class="comments"></ul>
         <form id="comment-form" class="add-form">
-          <input id="username-input" type="text" class="add-form-name" readonly value="" />
+          <input id="username-input" type="text" class="add-form-name" readonly value="${this.username}">
           <textarea id="comment-input" class="add-form-text" placeholder="Введите ваш комментарий" rows="4"></textarea>
           <div class="add-form-row">
             <button type="submit" id="submit" class="add-form-button">Написать</button>
           </div>
         </form>
       </div>
-      <div><a href="#" id="logout-link">Выйти</a></div>
+      <div><a href="#/login" id="login-link">Авторизоваться</a></div>
     `;
 
     this.commentsContainer = document.getElementById("comments");
@@ -72,28 +61,20 @@ export class CommentsApp {
     this.usernameInput = document.getElementById("username-input");
     this.commentInput = document.getElementById("comment-input");
 
-    // имя должно приходить с сервера после авторизации; пока пустое
-    this.usernameInput.value = ""; // будет заполняться при авторизации
-
-    // обработка формы
+    // обработчик отправки
     this.commentForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const author = this.usernameInput.value.trim();
       const text = this.commentInput.value.trim();
-      if (!author || !text) {
-        alert("Заполните имя и текст");
-        return;
-      }
-      // авторизация нужна для добавления
+      if (!text) return;
       if (!this.token) {
         alert("Пожалуйста, авторизуйтесь");
+        location.hash = "#/login";
         return;
       }
       try {
         await postComment(this.token, text);
-        // обновить список
         const newComment = {
-          author: { name: author },
+          author: { name: this.username || "Автор" },
           date: new Date().toISOString(),
           text,
           likes: 0,
@@ -109,31 +90,34 @@ export class CommentsApp {
       }
     });
 
-    // логика выхода
-    const logoutLink = document.getElementById("logout-link");
-    if (logoutLink) {
-      logoutLink.addEventListener("click", (ev) => {
-        ev.preventDefault();
-        localStorage.removeItem("auth_token");
-        this.token = null;
-        this.isAuthenticated = false;
-        this.renderLoginView();
-      });
+    // загрузка комментариев
+    try {
+      const data = await fetchComments(this.token);
+      this.commentsData = data.comments ?? [];
+      renderComments(this.commentsData, this.commentsContainer);
+    } catch (e) {
+      // если без токена — можно показать пустой список
+      this.commentsContainer.innerHTML = "";
     }
   }
 
   async renderLoginView() {
-    // чистим
     this.appRoot.innerHTML = "";
-    // показать страницу логина через отдельный компонент
     renderLoginPage(
       {
         onLogin: async (login, password) => {
           try {
             const token = await loginApi(login, password);
-            // сохранить имя пользователя в поле readonly после авторизации
-            // и переключиться на страницу комментариев
-            await this.onLoginSuccess(token);
+            // сохранить токен
+            this.token = token;
+            this.isAuthenticated = true;
+            localStorage.setItem("auth_token", token);
+
+            // подстановка имени после авторизации
+            const userName = await fetchCurrentUserName(token);
+            this.username = userName;
+            // перейти на страницу комментариев
+            location.hash = "/";
           } catch (err) {
             alert("Ошибка авторизации");
           }

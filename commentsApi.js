@@ -1,7 +1,5 @@
 // commentsApi.js
-
-const apiUrl = "https://wedev-api.sky.pro/api/v2/igor-syrovatko";
-
+const API_BASE = "https://wedev-api.sky.pro/api/v2/igor-syrovatko/";
 export async function fetchComments(token) {
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
   const resp = await fetch(`${API_BASE}comments`, { headers });

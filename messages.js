@@ -1,5 +1,4 @@
 // messages.js
-
 let loadingMessage = null;
 let addingCommentMessage = null;
 
