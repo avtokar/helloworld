@@ -1,5 +1,5 @@
 // loginView.js
-export function renderLoginView({ onLogin, onNavigateRegister }, appRoot) {
+export function renderLoginView({ onLogin }, appRoot) {
   if (!appRoot) appRoot = document.getElementById("app");
   appRoot.innerHTML = `
     <div class="login-page">

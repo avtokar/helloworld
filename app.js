@@ -18,6 +18,24 @@ export class CommentsApp {
     this.token = null;
     this.isAuthenticated = false;
     this.username = "";
+    async renderRegisterView() {
+  renderRegisterView(
+    {
+      onRegister: async (login, name, password) => {
+        const token = await registerApi(login, name, password);
+        if (!token) throw new Error("Регистрация не вернулась токеном");
+        localStorage.setItem("auth_token", token);
+        this.token = token;
+        this.isAuthenticated = true;
+        // подстановка имени после регистрации
+        this.username = await fetchCurrentUserName(token);
+        location.hash = "/";
+        return token;
+      },
+    },
+    this.appRoot
+  );
+}
   }
 
   async init() {

@@ -24,8 +24,9 @@ export function renderRegisterView({ onRegister }, appRoot) {
 
     try {
       const token = await onRegister(login, name, password);
-      // после успешной регистрации можно автоматически входить
-      // здесь можно вызвать колбэк повторно или перенаправить
+      if (token) {
+        location.hash = "/"; // переход к главной/пользовательскому сценарию
+      }
     } catch (err) {
       const errEl = document.getElementById("register-error");
       errEl.style.display = "block";
