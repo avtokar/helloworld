@@ -21,7 +21,8 @@ export function renderLoginView({ onLogin }, appRoot) {
     const password = document.getElementById("password").value;
     try {
       const token = await onLogin(login, password);
-      // успешный вход — можно перенаправлять в роутере
+      // успех: возвращается токен
+      return token;
     } catch (err) {
       const errEl = document.getElementById("login-error");
       errEl.style.display = "block";
@@ -29,9 +30,9 @@ export function renderLoginView({ onLogin }, appRoot) {
     }
   });
 
-  const toReg = document.getElementById("to-register");
-  if (toReg)
-    toReg.addEventListener("click", (e) => {
+  const toRegister = document.getElementById("to-register");
+  if (toRegister)
+    toRegister.addEventListener("click", (e) => {
       e.preventDefault();
       location.hash = "#/register";
     });

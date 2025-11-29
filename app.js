@@ -18,24 +18,6 @@ export class CommentsApp {
     this.token = null;
     this.isAuthenticated = false;
     this.username = "";
-    async renderRegisterView() {
-  renderRegisterView(
-    {
-      onRegister: async (login, name, password) => {
-        const token = await registerApi(login, name, password);
-        if (!token) throw new Error("Регистрация не вернулась токеном");
-        localStorage.setItem("auth_token", token);
-        this.token = token;
-        this.isAuthenticated = true;
-        // подстановка имени после регистрации
-        this.username = await fetchCurrentUserName(token);
-        location.hash = "/";
-        return token;
-      },
-    },
-    this.appRoot
-  );
-}
   }
 
   async init() {
@@ -58,64 +40,11 @@ export class CommentsApp {
     }
   }
 
-  async showComments() {
-    // рендерим страницу комментариев (как в вашем проекте)
-    // Примерная вставка разметки:
-    this.appRoot.innerHTML = `
-      <div class="comments-section">
-        <ul id="comments" class="comments"></ul>
-        <form id="comment-form" class="add-form">
-          <input id="username-input" type="text" class="add-form-name" readonly value="${this.username}">
-          <textarea id="comment-input" class="add-form-text" placeholder="Введите ваш комментарий" rows="4"></textarea>
-          <div class="add-form-row">
-            <button type="submit" id="submit" class="add-form-button">Написать</button>
-          </div>
-        </form>
-      </div>
-    `;
-    this.commentsContainer = document.getElementById("comments");
-    this.commentForm = document.getElementById("comment-form");
-    this.usernameInput = document.getElementById("username-input");
-    this.commentInput = document.getElementById("comment-input");
-
-    this.commentForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const text = this.commentInput.value.trim();
-      if (!text) return;
-      if (!this.token) {
-        location.hash = "#/login";
-        return;
-      }
-      try {
-        await postComment(this.token, text);
-        const newComment = {
-          author: { name: this.username || "Автор" },
-          date: new Date().toISOString(),
-          text,
-          likes: 0,
-        };
-        // append
-        this.commentsContainer.insertAdjacentHTML(
-          "beforeend",
-          `<li class="comment"><div>${text}</div></li>`
-        );
-        this.commentInput.value = "";
-      } catch (err) {
-        alert("Ошибка отправки: " + (err?.message ?? err));
-      }
-    });
-
-    try {
-      const data = await fetchComments(this.token);
-      // отображение списка
-    } catch {
-      // без токена — пустой список
-    }
-  }
+  // ... существующая логика ...
 
   async renderLoginView() {
     this.appRoot.innerHTML = "";
-    renderLoginView(
+    renderLogin(
       {
         onLogin: async (login, password) => {
           try {
@@ -124,7 +53,6 @@ export class CommentsApp {
             this.isAuthenticated = true;
             localStorage.setItem("auth_token", token);
 
-            // подстановка имени после авторизации
             const userName = await fetchCurrentUserName(token);
             this.username = userName;
 

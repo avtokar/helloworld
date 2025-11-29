@@ -25,7 +25,7 @@ export function renderRegisterView({ onRegister }, appRoot) {
     try {
       const token = await onRegister(login, name, password);
       if (token) {
-        location.hash = "/"; // переход к главной/пользовательскому сценарию
+        location.hash = "/"; // переход к главной
       }
     } catch (err) {
       const errEl = document.getElementById("register-error");

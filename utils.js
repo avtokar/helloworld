@@ -1,16 +1,4 @@
 // utils.js
-
-export function sanitizeText(text) {
-  return text
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
-}
-
-export function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 export async function fetchCurrentUserName(token) {
   try {
     const resp = await fetch("https://wedev-api.sky.pro/api/user", {
